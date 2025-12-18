@@ -1,0 +1,361 @@
+[gd_scene load_steps=23 format=3 uid="uid://viqjen2gswl8"]
+
+[ext_resource type="Script" uid="uid://cxmwmbj64yyf6" path="res://main/pureslime.gd" id="1_dmoso"]
+[ext_resource type="Script" uid="uid://bqels8x0aq68r" path="res://main/hurtbox_player.gd" id="2_ms6vc"]
+[ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_0y6rs"]
+[ext_resource type="Script" uid="uid://y88ywk1hxd5x" path="res://main/VisualController.gd" id="4_63udt"]
+[ext_resource type="Texture2D" uid="uid://csem5x4707mld" path="res://img/pureslime_normal.png" id="5_wncfo"]
+[ext_resource type="Texture2D" uid="uid://cfnbtb2gsaj26" path="res://img/slime_ghost_top.png" id="6_widp6"]
+[ext_resource type="Script" uid="uid://b6jev2orfexh8" path="res://main/tail_pivot.gd" id="7_0uise"]
+[ext_resource type="Texture2D" uid="uid://dt508bt02qo2r" path="res://img/slime_ghost_Tail.png" id="8_ljv3v"]
+[ext_resource type="Texture2D" uid="uid://f4wpqh5vbsrq" path="res://img/slime_ghost_tears.png" id="9_wi2ll"]
+[ext_resource type="Texture2D" uid="uid://0c071yis642a" path="res://img/pureslime_die.png" id="11_qti3r"]
+
+[sub_resource type="Curve2D" id="Curve2D_bc3cr"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -17, -8, 0, 0, 0, 0, 11, -15, 0, 0, 0, 0, -9, -22)
+}
+point_count = 4
+
+[sub_resource type="Animation" id="Animation_p6qvs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/PureSlimeVisual/BodySprite:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_wncfo")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/PureSlimeVisual/BodySprite:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/PureSlimeVisual/GhostPath/GhostFollow:progress_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_514y6"]
+resource_name = "die"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_wncfo"), ExtResource("11_qti3r")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125), Vector2(0.145, 0.09)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/PureSlimeVisual/BodySprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.19995075, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/PureSlimeVisual/GhostPath/GhostFollow:progress_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1, 0.8),
+"transitions": PackedFloat32Array(3.0314305, 1),
+"update": 0,
+"values": [0.0667, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.65, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bc3cr"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125), Vector2(0.135, 0.145), Vector2(0.145, 0.14), Vector2(0.135, 0.145), Vector2(0.145, 0.145)]
+}
+
+[sub_resource type="Animation" id="Animation_0coyo"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125), Vector2(0.135, 0.145), Vector2(0.145, 0.14), Vector2(0.135, 0.145), Vector2(0.145, 0.145)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08726646, 0.0, -0.08726646, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p6qvs"]
+_data = {
+&"RESET": SubResource("Animation_p6qvs"),
+&"die": SubResource("Animation_514y6"),
+&"idle": SubResource("Animation_bc3cr"),
+&"walk": SubResource("Animation_0coyo")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0coyo"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p6qvs"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bc3cr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_514y6"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0coyo"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0coyo"]
+states/Start/position = Vector2(213, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_0coyo")
+states/idle/position = Vector2(526, 51)
+states/walk/node = SubResource("AnimationNodeAnimation_p6qvs")
+states/walk/position = Vector2(520, 180)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_bc3cr"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_514y6"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_0coyo")]
+
+[node name="pureslime" type="CharacterBody2D"]
+script = ExtResource("1_dmoso")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+script = ExtResource("2_ms6vc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_0y6rs")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="PureSlimeVisual" type="Node2D" parent="Visual"]
+script = ExtResource("4_63udt")
+
+[node name="BodySprite" type="Sprite2D" parent="Visual/PureSlimeVisual"]
+scale = Vector2(0.14453125, 0.14453125)
+texture = ExtResource("5_wncfo")
+
+[node name="GhostPath" type="Path2D" parent="Visual/PureSlimeVisual"]
+position = Vector2(-6, 6)
+curve = SubResource("Curve2D_bc3cr")
+
+[node name="GhostFollow" type="PathFollow2D" parent="Visual/PureSlimeVisual/GhostPath"]
+rotates = false
+loop = false
+
+[node name="GhostRoot" type="Node2D" parent="Visual/PureSlimeVisual/GhostPath/GhostFollow"]
+
+[node name="GhostTop" type="Sprite2D" parent="Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot"]
+position = Vector2(-9.000001, -43.000004)
+scale = Vector2(0.145, 0.145)
+texture = ExtResource("6_widp6")
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 256)
+
+[node name="TailPivot" type="Node2D" parent="Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot/GhostTop"]
+scale = Vector2(1.0000001, 1.0000001)
+script = ExtResource("7_0uise")
+
+[node name="GhostTail" type="Sprite2D" parent="Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot/GhostTop/TailPivot"]
+position = Vector2(0, 255.748)
+scale = Vector2(1.0000001, 1.0000001)
+texture = ExtResource("8_ljv3v")
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 256)
+
+[node name="GhostTears2" type="Sprite2D" parent="Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot/GhostTop/TailPivot/GhostTail"]
+position = Vector2(12.965759, -144.78253)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("9_wi2ll")
+
+[node name="GhostTears" type="Sprite2D" parent="Visual/PureSlimeVisual/GhostPath/GhostFollow/GhostRoot/GhostTop/TailPivot/GhostTail"]
+position = Vector2(-118.06872, -144.78252)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("9_wi2ll")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual/PureSlimeVisual"]
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_p6qvs")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Visual/PureSlimeVisual"]
+active = false
+root_node = NodePath("../../..")
+tree_root = SubResource("AnimationNodeStateMachine_0coyo")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/is_idle = false
+parameters/conditions/is_moving = false
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Visual"]

@@ -1,0 +1,279 @@
+[gd_scene load_steps=26 format=3 uid="uid://cmfn4shrapibl"]
+
+[ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
+[ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
+[ext_resource type="Script" uid="uid://bqels8x0aq68r" path="res://main/hurtbox_player.gd" id="4_hlcqn"]
+[ext_resource type="Script" uid="uid://bsrp7my386qil" path="res://main/EnemyManager.gd" id="5_v3ojx"]
+[ext_resource type="Script" uid="uid://cxmwmbj64yyf6" path="res://main/pureslime.gd" id="5_yyuar"]
+[ext_resource type="Script" uid="uid://y88ywk1hxd5x" path="res://main/VisualController.gd" id="6_0coyo"]
+[ext_resource type="Script" uid="uid://b5jvnxtqm46hk" path="res://main/WeaponsManager.gd" id="6_f7m14"]
+[ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="6_yyuar"]
+[ext_resource type="Texture2D" uid="uid://csem5x4707mld" path="res://img/pureslime_normal.png" id="7_0coyo"]
+[ext_resource type="Script" uid="uid://bbntw3hcehnai" path="res://main/ProjectileManager.gd" id="7_yyuar"]
+[ext_resource type="Script" uid="uid://dejwruss64750" path="res://main/SummonManager.gd" id="8_0coyo"]
+[ext_resource type="Script" uid="uid://cf8nlyr8da1xk" path="res://main/Enemy_01.gd" id="8_p6qvs"]
+[ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/HUD.gd" id="9_4u4fy"]
+[ext_resource type="Script" uid="uid://b64plejtjgtel" path="res://main/hurtbox_ememy.gd" id="10_0coyo"]
+[ext_resource type="Script" uid="uid://d0ps74yqcgtkw" path="res://main/DebugOverlay.gd" id="10_j015t"]
+
+[sub_resource type="Animation" id="Animation_p6qvs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/pureslime:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/pureslime:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/pureslime:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_bc3cr"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/pureslime:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/pureslime:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125), Vector2(0.135, 0.145), Vector2(0.145, 0.14), Vector2(0.135, 0.145), Vector2(0.145, 0.145)]
+}
+
+[sub_resource type="Animation" id="Animation_0coyo"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/pureslime:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/pureslime:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125), Vector2(0.135, 0.145), Vector2(0.145, 0.14), Vector2(0.135, 0.145), Vector2(0.145, 0.145)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/pureslime:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08726646, 0.0, -0.08726646, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p6qvs"]
+_data = {
+&"RESET": SubResource("Animation_p6qvs"),
+&"idle": SubResource("Animation_bc3cr"),
+&"walk": SubResource("Animation_0coyo")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0coyo"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p6qvs"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bc3cr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_514y6"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0coyo"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0coyo"]
+states/Start/position = Vector2(213, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_0coyo")
+states/idle/position = Vector2(526, 51)
+states/walk/node = SubResource("AnimationNodeAnimation_p6qvs")
+states/walk/position = Vector2(520, 180)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_bc3cr"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_514y6"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_0coyo")]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_2c7eb")
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("2_4u4fy")
+
+[node name="Props" type="Node2D" parent="World"]
+
+[node name="Decoration" type="Node2D" parent="World/Props"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="World"]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Players" type="Node2D" parent="Entities"]
+
+[node name="pureslime" type="CharacterBody2D" parent="Entities/Players"]
+script = ExtResource("5_yyuar")
+
+[node name="Hurtbox" type="Area2D" parent="Entities/Players/pureslime"]
+script = ExtResource("4_hlcqn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Players/pureslime"]
+
+[node name="StateMachine" type="Node" parent="Entities/Players/pureslime"]
+script = ExtResource("6_yyuar")
+
+[node name="Visual" type="Node2D" parent="Entities/Players/pureslime"]
+
+[node name="PureSlimeVisual" type="Node2D" parent="Entities/Players/pureslime/Visual"]
+script = ExtResource("6_0coyo")
+
+[node name="pureslime" type="Sprite2D" parent="Entities/Players/pureslime/Visual/PureSlimeVisual"]
+scale = Vector2(0.14453125, 0.14453125)
+texture = ExtResource("7_0coyo")
+
+[node name="ghost" type="Sprite2D" parent="Entities/Players/pureslime/Visual/PureSlimeVisual"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Entities/Players/pureslime/Visual/PureSlimeVisual"]
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_p6qvs")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Entities/Players/pureslime/Visual/PureSlimeVisual"]
+root_node = NodePath("../../..")
+tree_root = SubResource("AnimationNodeStateMachine_0coyo")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/is_idle = false
+parameters/conditions/is_moving = false
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Entities/Players/pureslime/Visual"]
+
+[node name="Enemies" type="Node2D" parent="Entities"]
+script = ExtResource("5_v3ojx")
+
+[node name="Enemy_01" type="CharacterBody2D" parent="Entities/Enemies"]
+script = ExtResource("8_p6qvs")
+
+[node name="Hurtbox2" type="Area2D" parent="Entities/Enemies/Enemy_01"]
+script = ExtResource("10_0coyo")
+
+[node name="StateMachine" type="Node" parent="Entities/Enemies/Enemy_01"]
+script = ExtResource("6_yyuar")
+
+[node name="Visual" type="Node2D" parent="Entities/Enemies/Enemy_01"]
+
+[node name="Enemy01Visual" type="Node2D" parent="Entities/Enemies/Enemy_01/Visual"]
+
+[node name="Weapons" type="Node2D" parent="."]
+script = ExtResource("6_f7m14")
+
+[node name="Projectiles" type="Node2D" parent="."]
+script = ExtResource("7_yyuar")
+
+[node name="Summons" type="Node2D" parent="."]
+script = ExtResource("8_0coyo")
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_4u4fy")
+
+[node name="HPBar" type="TextureProgressBar" parent="UI/HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ExpBar" type="TextureProgressBar" parent="UI/HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WeaponList" type="HBoxContainer" parent="UI/HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BuffIcons" type="HBoxContainer" parent="UI/HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseMenu" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DebugPanel" type="CanvasLayer" parent="UI"]
+script = ExtResource("10_j015t")
+
+[node name="Camera2D" type="Camera2D" parent="."]
