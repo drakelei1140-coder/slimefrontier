@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw1oq617byto4"
-path="res://.godot/imported/pureslime_normal.png-255ac7a921155e2063e0b868f0f20fca.ctex"
+uid="uid://dcxrejbnpsevn"
+path="res://.godot/imported/pureslime_normal - 副本.png-c6236636f2a27b8ee065675ea8c8ee7c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/pureslime_normal.png"
-dest_files=["res://.godot/imported/pureslime_normal.png-255ac7a921155e2063e0b868f0f20fca.ctex"]
+source_file="res://img/pureslime_normal - 副本.png"
+dest_files=["res://.godot/imported/pureslime_normal - 副本.png-c6236636f2a27b8ee065675ea8c8ee7c.ctex"]
 
 [params]
 

@@ -1,14 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://viqjen2gswl8"]
+[gd_scene load_steps=27 format=3 uid="uid://viqjen2gswl8"]
 
 [ext_resource type="Script" uid="uid://cxmwmbj64yyf6" path="res://main/pureslime.gd" id="1_dmoso"]
 [ext_resource type="Script" uid="uid://bqels8x0aq68r" path="res://main/hurtbox_player.gd" id="2_ms6vc"]
 [ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_0y6rs"]
-[ext_resource type="Script" uid="uid://y88ywk1hxd5x" path="res://main/VisualController.gd" id="4_63udt"]
-[ext_resource type="Texture2D" uid="uid://csem5x4707mld" path="res://img/pureslime_normal.png" id="5_wncfo"]
+[ext_resource type="Script" uid="uid://y88ywk1hxd5x" path="res://main/scripts/visual/VisualController.gd" id="4_63udt"]
 [ext_resource type="Texture2D" uid="uid://cfnbtb2gsaj26" path="res://img/slime_ghost_top.png" id="6_widp6"]
-[ext_resource type="Script" uid="uid://b6jev2orfexh8" path="res://main/tail_pivot.gd" id="7_0uise"]
+[ext_resource type="Script" uid="uid://b6jev2orfexh8" path="res://main/scripts/visual/tail_pivot.gd" id="7_0uise"]
 [ext_resource type="Texture2D" uid="uid://dt508bt02qo2r" path="res://img/slime_ghost_Tail.png" id="8_ljv3v"]
+[ext_resource type="Texture2D" uid="uid://bw1oq617byto4" path="res://img/pureslime_normal.png" id="9_0uise"]
 [ext_resource type="Texture2D" uid="uid://f4wpqh5vbsrq" path="res://img/slime_ghost_tears.png" id="9_wi2ll"]
+[ext_resource type="Texture2D" uid="uid://40o72wmwdmvr" path="res://img/pureslime_stagger.png" id="11_dmoso"]
 [ext_resource type="Texture2D" uid="uid://0c071yis642a" path="res://img/pureslime_die.png" id="11_qti3r"]
 
 [sub_resource type="Curve2D" id="Curve2D_bc3cr"]
@@ -65,7 +66,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("5_wncfo")]
+"values": [ExtResource("9_0uise")]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -104,6 +105,35 @@ tracks/6/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_0uise"]
+resource_name = "dash"
+length = 0.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.14453125, 0.14453125), Vector2(0.13, 0.145), Vector2(0.14453125, 0.14453125), Vector2(0.14453125, 0.14453125)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.27052602, 0.27052602, 0.0]
+}
+
 [sub_resource type="Animation" id="Animation_514y6"]
 resource_name = "die"
 length = 0.8
@@ -118,7 +148,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.05),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("5_wncfo"), ExtResource("11_qti3r")]
+"values": [ExtResource("9_0uise"), ExtResource("11_qti3r")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -211,6 +241,47 @@ tracks/1/keys = {
 "values": [Vector2(0.14453125, 0.14453125), Vector2(0.135, 0.145), Vector2(0.145, 0.14), Vector2(0.135, 0.145), Vector2(0.145, 0.145)]
 }
 
+[sub_resource type="Animation" id="Animation_dmoso"]
+resource_name = "stagger"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_dmoso")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.13, 0.145)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.08726646]
+}
+
 [sub_resource type="Animation" id="Animation_0coyo"]
 resource_name = "walk"
 length = 0.6
@@ -253,11 +324,55 @@ tracks/2/keys = {
 "values": [0.0, 0.08726646, 0.0, -0.08726646, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_ms6vc"]
+resource_name = "stagger_left"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_dmoso")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.13, 0.145)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.08726646]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p6qvs"]
 _data = {
 &"RESET": SubResource("Animation_p6qvs"),
+&"dash": SubResource("Animation_0uise"),
 &"die": SubResource("Animation_514y6"),
 &"idle": SubResource("Animation_bc3cr"),
+&"stagger": SubResource("Animation_dmoso"),
+&"stagger_left": SubResource("Animation_ms6vc"),
 &"walk": SubResource("Animation_0coyo")
 }
 
@@ -285,6 +400,7 @@ states/idle/position = Vector2(526, 51)
 states/walk/node = SubResource("AnimationNodeAnimation_p6qvs")
 states/walk/position = Vector2(520, 180)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_bc3cr"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_514y6"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_0coyo")]
+graph_offset = Vector2(-346.51187, 0)
 
 [node name="pureslime" type="CharacterBody2D"]
 script = ExtResource("1_dmoso")
@@ -301,10 +417,11 @@ script = ExtResource("3_0y6rs")
 
 [node name="PureSlimeVisual" type="Node2D" parent="Visual"]
 script = ExtResource("4_63udt")
+visual_default_body_texture = ExtResource("9_0uise")
 
 [node name="BodySprite" type="Sprite2D" parent="Visual/PureSlimeVisual"]
 scale = Vector2(0.14453125, 0.14453125)
-texture = ExtResource("5_wncfo")
+texture = ExtResource("9_0uise")
 
 [node name="GhostPath" type="Path2D" parent="Visual/PureSlimeVisual"]
 position = Vector2(-6, 6)
@@ -359,3 +476,5 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_moving = false
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Visual"]
+
+[node name="Afterimages" type="Node2D" parent="."]

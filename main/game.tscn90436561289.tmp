@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmfn4shrapibl"]
+[gd_scene load_steps=12 format=3 uid="uid://cmfn4shrapibl"]
 
 [ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
 [ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
@@ -11,11 +11,10 @@
 [ext_resource type="Script" uid="uid://cf8nlyr8da1xk" path="res://main/Enemy_01.gd" id="8_p6qvs"]
 [ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/HUD.gd" id="9_4u4fy"]
 [ext_resource type="Script" uid="uid://b64plejtjgtel" path="res://main/hurtbox_ememy.gd" id="10_0coyo"]
-[ext_resource type="Script" uid="uid://doqy6mxgnxlrg" path="res://main/scripts/ui/DebugPanel.gd" id="12_v3ojx"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_2c7eb")
-game_player_packed_scene = ExtResource("3_v3ojx")
+player_scene = ExtResource("3_v3ojx")
 
 [node name="SpawnPoint" type="Node2D" parent="."]
 
@@ -113,44 +112,21 @@ anchor_right = 1.0
 offset_left = -110.0
 offset_bottom = 300.0
 grow_horizontal = 0
-script = ExtResource("12_v3ojx")
-ui_debug_game_node_path = NodePath("../../..")
-
-[node name="TextEdit" type="TextEdit" parent="UI/DebugRoot/DebugPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.564
-anchor_top = 0.44400004
-anchor_right = 0.564
-anchor_bottom = 0.44400004
-offset_left = -51.04
-offset_top = 1.7999878
-offset_right = 38.96
-offset_bottom = 37.799988
-text = "冲刺=空格"
 
 [node name="slimeResurrection" type="Button" parent="UI/DebugRoot/DebugPanel"]
 layout_mode = 0
 offset_left = 11.0
 offset_top = 11.0
 offset_right = 101.0
-offset_bottom = 47.0
+offset_bottom = 42.0
 text = "角色重生"
 
 [node name="slimeDie" type="Button" parent="UI/DebugRoot/DebugPanel"]
 layout_mode = 0
 offset_left = 11.0
-offset_top = 52.0
+offset_top = 51.0
 offset_right = 101.0
-offset_bottom = 88.0
+offset_bottom = 82.0
 text = "角色死亡"
-
-[node name="slimeStagger" type="Button" parent="UI/DebugRoot/DebugPanel"]
-layout_mode = 0
-offset_left = 11.0
-offset_top = 93.0
-offset_right = 101.0
-offset_bottom = 129.0
-text = "硬直"
 
 [node name="Camera2D" type="Camera2D" parent="."]

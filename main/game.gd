@@ -1,106 +1,132 @@
 extends Node2D
+"""
+Game（场景级控制器 / Scene Controller）
+- 上帝视角管理脚本：不参与移动/战斗
+- 负责：
+  1) 管理玩家实例的生成 / 销毁（spawn / despawn）
+  2) 管理出生点 SpawnPoint
+  3) 向 UI（DebugPanel）暴露“查询当前玩家 / 调试生成玩家”等接口
 
-@export var player_scene: PackedScene  # 拖入 res://.../pureslime.tscn
+注意：
+- DebugPanel（调试面板）按钮的连接、disabled 状态更新，全部交给 DebugPanel.gd 管理
+- Game 不再直接引用任何 Button，避免 UI 结构变化导致 Nil 报错
+"""
 
-@onready var players_root: Node = $Entities/Players
-@onready var spawn_point: Node2D = $SpawnPoint
+# =========================
+# Inspector 可配置：玩家预制体（PackedScene）
+# =========================
+@export var game_player_packed_scene: PackedScene
+# 在 Inspector 里拖入：res://.../pureslime.tscn
 
-var btn_respawn: Button
-var btn_die: Button
 
-var player: Player = null
+# =========================
+# 场景节点引用（onready）
+# =========================
+@onready var game_players_root_node: Node = $Entities/Players
+@onready var game_player_spawn_point: Node2D = $SpawnPoint
+
+
+# =========================
+# 当前被 Game 管理的玩家实例（同一时间 0 或 1 个）
+# =========================
+var game_current_player_instance: Player = null
 
 
 func _ready() -> void:
-	# 1) 找按钮（兼容两种UI层级）
-	btn_respawn = _find_button([
-		"UI/DebugRoot/DebugPanel/slimeResurrection",
-	])
-	btn_die = _find_button([
-		"UI/DebugRoot/DebugPanel/slimeDie",
-	])
+	# 启动时：
+	# - 若场景中手动放了玩家：接管
+	# - 否则：自动生成一个（方便调试；不想自动生成就注释掉 _game_spawn_player_instance()）
+	game_current_player_instance = _game_find_existing_player_instance()
 
-	if btn_respawn == null or btn_die == null:
-		push_error("找不到按钮：请检查 slimeResurrection / slimeDie 的节点路径")
-		return
-
-	# 2) 绑定按钮事件
-	btn_respawn.pressed.connect(_on_respawn_pressed)
-	btn_die.pressed.connect(_on_die_pressed)
-
-	# 3) 启动时：如果场景里已经有玩家（你手动放的），就抓引用
-	#    否则自动生成一个（推荐用于你现在的调试流程）
-	player = _find_existing_player()
-	if is_instance_valid(player):
-		player.tree_exited.connect(_on_player_exited)
+	if is_instance_valid(game_current_player_instance):
+		# 监听玩家销毁：玩家 queue_free 后触发 tree_exited
+		game_current_player_instance.tree_exited.connect(_on_game_player_tree_exited)
 	else:
-		_spawn_player()  # 如果你希望开局没有角色，把这行注释掉
-
-	_update_buttons()
+		_game_spawn_player_instance()
 
 
-func _on_die_pressed() -> void:
-	# 规则5：没角色时点【死亡】无效
-	if not is_instance_valid(player):
+# =========================
+# 对外接口（给 DebugPanel 调用）
+# =========================
+func game_get_current_player_instance() -> Player:
+	# 防止被 DebugPanel 在 Game ready 之前调用导致 onready 未赋值
+	if not is_node_ready():
+		return null
+
+	if is_instance_valid(game_current_player_instance):
+		return game_current_player_instance
+
+	# 兜底：如果引用丢了，尝试在容器里重新找
+	game_current_player_instance = _game_find_existing_player_instance()
+	return game_current_player_instance
+
+
+func game_debug_respawn_player() -> void:
+	# 给 DebugPanel 的“复活/重生”按钮用
+	# 规则：有玩家时不生成（包括正在 die 动画还没 queue_free）
+	if is_instance_valid(game_current_player_instance):
 		return
 
-	player.die()
-	_update_buttons()
+	_game_spawn_player_instance()
 
 
-func _on_respawn_pressed() -> void:
-	# 规则4：有角色时点【重生】无效（包括正在DYING但还没消失）
-	if is_instance_valid(player):
+# =========================
+# 内部：生成 / 销毁监听
+# =========================
+func _game_spawn_player_instance() -> void:
+	# 玩家实例化的唯一入口
+	if game_player_packed_scene == null:
+		push_error("game_player_packed_scene 没有设置：请在 Game 节点 Inspector 里拖入 pureslime.tscn（PackedScene）")
 		return
 
-	_spawn_player()
-	_update_buttons()
-
-
-func _spawn_player() -> void:
-	if player_scene == null:
-		push_error("player_scene 没有设置：请在 Game 节点 Inspector 里拖入 pureslime.tscn（PackedScene）")
+	# 安全：容器/出生点检查（理论上 onready 已保证，但这里加一道避免改场景后踩坑）
+	if game_players_root_node == null or not is_instance_valid(game_players_root_node):
+		push_error("game_players_root_node 无效：请检查场景路径 Entities/Players 是否存在")
+		return
+	if game_player_spawn_point == null or not is_instance_valid(game_player_spawn_point):
+		push_error("game_player_spawn_point 无效：请检查场景路径 SpawnPoint 是否存在")
 		return
 
-	player = player_scene.instantiate() as Player
-	if player == null:
-		push_error("实例化失败或类型不是 Player：请确认 pureslime 根节点脚本 extends Player")
+	game_current_player_instance = game_player_packed_scene.instantiate() as Player
+	if game_current_player_instance == null:
+		push_error("实例化失败或类型不是 Player：请确认 pureslime 根节点脚本 class_name Player")
 		return
 
-	player.name = "pureslime"
-	players_root.add_child(player)
-	player.global_position = spawn_point.global_position
-	player.tree_exited.connect(_on_player_exited)
+	# 给一个固定名字（可选，便于调试）
+	game_current_player_instance.name = "pureslime"
+
+	# 加入场景树
+	game_players_root_node.add_child(game_current_player_instance)
+
+	# 出生点位置
+	game_current_player_instance.global_position = game_player_spawn_point.global_position
+
+	# 监听销毁
+	game_current_player_instance.tree_exited.connect(_on_game_player_tree_exited)
 
 
-func _on_player_exited() -> void:
-	player = null
-	_update_buttons()
+func _on_game_player_tree_exited() -> void:
+	# 玩家被 queue_free 后触发：清理引用
+	game_current_player_instance = null
+	# 注意：按钮状态由 DebugPanel.gd 自己刷新，这里不再处理任何 UI
 
 
-func _update_buttons() -> void:
-	var has_player := is_instance_valid(player)
-	btn_respawn.disabled = has_player
-	btn_die.disabled = not has_player
+# =========================
+# 内部：接管场景里已有玩家
+# =========================
+func _game_find_existing_player_instance() -> Player:
+	# 注意：这个函数可能在 Game ready 前被调用（理论上不会，但防御一下）
+	if game_players_root_node == null or not is_instance_valid(game_players_root_node):
+		return null
 
+	# 优先按固定名字找
+	var player_by_name := game_players_root_node.get_node_or_null("pureslime") as Player
+	if is_instance_valid(player_by_name):
+		return player_by_name
 
-func _find_existing_player() -> Player:
-	# 你可以按名字找（如果你坚持固定叫 pureslime）
-	var p := players_root.get_node_or_null("pureslime") as Player
-	if is_instance_valid(p):
-		return p
+	# 否则遍历容器子节点
+	for child in game_players_root_node.get_children():
+		if child is Player:
+			return child as Player
 
-	# 更稳：找 Players 节点下任意一个 Player（以后多角色也不怕）
-	for c in players_root.get_children():
-		if c is Player:
-			return c as Player
-
-	return null
-
-
-func _find_button(paths: Array[String]) -> Button:
-	for p in paths:
-		var n := get_node_or_null(p)
-		if n is Button:
-			return n as Button
 	return null
