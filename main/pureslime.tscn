@@ -1,7 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://viqjen2gswl8"]
+[gd_scene load_steps=28 format=3 uid="uid://viqjen2gswl8"]
 
 [ext_resource type="Script" uid="uid://cxmwmbj64yyf6" path="res://main/pureslime.gd" id="1_dmoso"]
-[ext_resource type="Script" uid="uid://bqels8x0aq68r" path="res://main/hurtbox_player.gd" id="2_ms6vc"]
+[ext_resource type="Script" uid="uid://bqels8x0aq68r" path="res://main/scripts/actors/combat/hurtbox_player.gd" id="2_ms6vc"]
 [ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_0y6rs"]
 [ext_resource type="Script" uid="uid://y88ywk1hxd5x" path="res://main/scripts/visual/VisualController.gd" id="4_63udt"]
 [ext_resource type="Texture2D" uid="uid://cfnbtb2gsaj26" path="res://img/slime_ghost_top.png" id="6_widp6"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://f4wpqh5vbsrq" path="res://img/slime_ghost_tears.png" id="9_wi2ll"]
 [ext_resource type="Texture2D" uid="uid://40o72wmwdmvr" path="res://img/pureslime_stagger.png" id="11_dmoso"]
 [ext_resource type="Texture2D" uid="uid://0c071yis642a" path="res://img/pureslime_die.png" id="11_qti3r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmoso"]
+radius = 30.0
 
 [sub_resource type="Curve2D" id="Curve2D_bc3cr"]
 _data = {
@@ -282,6 +285,47 @@ tracks/2/keys = {
 "values": [-0.08726646]
 }
 
+[sub_resource type="Animation" id="Animation_ms6vc"]
+resource_name = "stagger_left"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_dmoso")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.13, 0.145)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.08726646]
+}
+
 [sub_resource type="Animation" id="Animation_0coyo"]
 resource_name = "walk"
 length = 0.6
@@ -322,47 +366,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [0.0, 0.08726646, 0.0, -0.08726646, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_ms6vc"]
-resource_name = "stagger_left"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visual/PureSlimeVisual/BodySprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("11_dmoso")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visual/PureSlimeVisual/BodySprite:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.13, 0.145)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Visual/PureSlimeVisual/BodySprite:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.08726646]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p6qvs"]
@@ -406,9 +409,14 @@ graph_offset = Vector2(-346.51187, 0)
 script = ExtResource("1_dmoso")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
 script = ExtResource("2_ms6vc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_dmoso")
+
+[node name="HurtboxMarker (Node)" type="Node" parent="Hurtbox"]
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_0y6rs")
@@ -476,5 +484,8 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_moving = false
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Visual"]
+visible = false
 
 [node name="Afterimages" type="Node2D" parent="."]
+
+[node name="CombatHooks" type="Node" parent="."]

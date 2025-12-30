@@ -23,13 +23,15 @@ var role_current_operation_state = RoleOperationState.IDLE
 @export var role_base_move_speed: float = 300.0
 
 # ---- Dash（冲刺）参数：冲刺距离 ≈ dash_move_speed * dash_total_duration ----
-@export var dash_move_speed: float = 700.0                 # 冲刺速度
+@export var dash_move_speed: float = 800.0                 # 冲刺速度
 @export var dash_total_duration: float = 0.18              # 冲刺总时长
-@export var dash_invincible_duration: float = 0.12         # 无敌帧时长（冲刺开始后的前 N 秒）
+@export var dash_invincible_duration: float = 0.18         # 无敌帧时长（冲刺开始后的前 N 秒）
 @export var dash_cooldown_duration: float = 0.80           # 冲刺冷却时长
 
 # ---- Stagger（硬直）参数 ----
 @export var stagger_default_duration: float = 0.25         # 默认硬直时间
+
+var dash_invincible_has_ended: bool = false
 
 # =========================
 # 输入（由外部每帧写入）
@@ -80,6 +82,13 @@ var role_visual_controller: Node = null
 
 func _ready() -> void:
 	# 初始进入 IDLE
+	_enter_role_operation_state(RoleOperationState.IDLE)
+	
+		# 参数保护：无敌帧不能超过 dash 总时长
+	if dash_invincible_duration > dash_total_duration:
+		push_warning("dash_invincible_duration(%.3f) > dash_total_duration(%.3f). Clamped to dash_total_duration." % [dash_invincible_duration, dash_total_duration])
+		dash_invincible_duration = dash_total_duration
+
 	_enter_role_operation_state(RoleOperationState.IDLE)
 
 
@@ -168,17 +177,23 @@ func _update_state_move(_delta: float) -> void:
 # 状态更新：DASH
 # =========================================================
 func _update_state_dash(delta: float) -> void:
-	# Dash 计时器累加：用它判断无敌帧、dash结束
+	# 累计 dash 时间
 	dash_elapsed_time_since_start += delta
 
-	# 冲刺移动（关键：dash_move_speed + dash_total_duration 控制冲刺距离）
+	# ✅ 稳定检测：无敌帧是否已经结束（只会触发一次）
+	if not dash_invincible_has_ended \
+		and dash_elapsed_time_since_start >= dash_invincible_duration:
+		dash_invincible_has_ended = true
+		role_on_invincibility_ended()
+
+	# 冲刺移动
 	velocity = dash_move_direction * dash_move_speed
 	move_and_slide()
 
-	# 表现层：保持方向（让朝向一致）
+	# 表现层：保持方向
 	visual_set_move_direction(dash_move_direction)
 
-	# Dash 结束：关残像 -> 回到 MOVE/IDLE
+	# Dash 结束：关残影 -> 回到 MOVE / IDLE
 	if dash_elapsed_time_since_start >= dash_total_duration:
 		visual_stop_dash_afterimage()
 
@@ -266,6 +281,7 @@ func _enter_dash_state() -> void:
 
 	# 表现：开冲刺残影
 	visual_start_dash_afterimage()
+	dash_invincible_has_ended = false
 
 func _dash_force_terminate_and_restart_cooldown() -> void:
 	# 1) 立刻关残影（解决“残影一直生成”）
@@ -316,6 +332,35 @@ func role_is_currently_invincible() -> bool:
 	# 必须“正在Dash” 并且 “dash开始后经过时间 <= 无敌帧时长”
 	return role_current_operation_state == RoleOperationState.DASH \
 		and dash_elapsed_time_since_start <= dash_invincible_duration
+
+# =========================================================
+# Dash 无敌帧结束后的“重叠补算受击”
+# =========================================================
+func role_on_invincibility_ended() -> void:
+	# 延迟到物理帧之后，确保 overlaps 数据是最新的
+	call_deferred("_role_apply_overlap_hit_if_needed")
+
+
+func _role_apply_overlap_hit_if_needed() -> void:
+	# 如果又进入无敌、或已经死亡，就不处理
+	if role_current_operation_state == RoleOperationState.DEAD:
+		return
+	if role_is_currently_invincible():
+		return
+
+	var role_hurtbox := get_node_or_null("Hurtbox") as HurtboxPlayer
+	if role_hurtbox == null:
+		return
+
+	var hitbox := role_hurtbox.hurtbox_get_any_overlapping_enemy_hitbox()
+	if hitbox == null:
+		return
+
+	role_apply_hit(
+		hitbox.hitbox_get_damage(),
+		hitbox.hitbox_get_stagger()
+	)
+
 
 
 # =========================================================

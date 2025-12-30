@@ -18,13 +18,17 @@ func _ready() -> void:
 	# 死亡动画播完 -> 销毁角色节点（你当前调试流程：die 后消失）
 	if is_instance_valid(cached_visual_controller) and cached_visual_controller.has_signal("die_finished"):
 		cached_visual_controller.connect("die_finished", _on_visual_die_finished)
-
-	#role_current_facing_direction = Vector2.LEFT
-	#role_last_nonzero_move_direction = Vector2.LEFT
+	
+	var role_hurtbox: HurtboxPlayer = $Hurtbox as HurtboxPlayer
+	if is_instance_valid(role_hurtbox):
+		role_hurtbox.hurtbox_hit.connect(_on_role_hurtbox_hit)
 
 	# 调用基类初始化
 	super._ready()
 
+func _on_role_hurtbox_hit(damage: int, stagger: float, _source: Node) -> void:
+	# 统一走 ActorBase 的入口（你已有）
+	role_apply_hit(damage, stagger)
 
 func _physics_process(delta: float) -> void:
 	# 1) 读取移动方向

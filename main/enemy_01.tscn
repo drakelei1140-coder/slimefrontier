@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0lt2mqptlvq7"]
+
+[ext_resource type="Script" uid="uid://cf8nlyr8da1xk" path="res://main/Enemy_01.gd" id="1_igf4t"]
+[ext_resource type="Script" uid="uid://b64plejtjgtel" path="res://main/scripts/actors/combat/hurtbox_ememy.gd" id="2_capf1"]
+[ext_resource type="Script" uid="uid://dbghl6d05xc72" path="res://main/scripts/actors/combat/Hitbox.gd" id="3_es8kg"]
+[ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_p0vte"]
+[ext_resource type="Script" uid="uid://1lxy25lewi3" path="res://main/scripts/visual/EnemyVisualController.gd" id="5_1bcvn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p0vte"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_es8kg"]
+radius = 30.0
+
+[node name="Enemy_01" type="CharacterBody2D"]
+position = Vector2(256, 0)
+script = ExtResource("1_igf4t")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("2_capf1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_p0vte")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("3_es8kg")
+hitbox_team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+shape = SubResource("CircleShape2D_es8kg")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_p0vte")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Enemy01Visual" type="Node2D" parent="Visual"]
+script = ExtResource("5_1bcvn")

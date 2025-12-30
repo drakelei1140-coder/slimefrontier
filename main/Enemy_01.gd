@@ -4,6 +4,17 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+func _ready() -> void:
+	var role_hurtbox: HurtboxEnemy = $Hurtbox as HurtboxEnemy
+	if is_instance_valid(role_hurtbox):
+		role_hurtbox.hurtbox_hit.connect(_on_role_hurtbox_hit)
+
+
+func _on_role_hurtbox_hit(damage: int, stagger: float, _source: Node) -> void:
+	# 如果 Enemy_01 也继承 ActorBase，那就直接：
+	# role_apply_hit(damage, stagger)
+	# 否则先打印验证链路通不通：
+	print("Enemy hit! damage=", damage, " stagger=", stagger)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

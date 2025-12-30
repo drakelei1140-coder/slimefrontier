@@ -107,6 +107,10 @@ skill_4={
 ]
 }
 
+[physics]
+
+2d/default_gravity=0.0
+
 [rendering]
 
 renderer/rendering_method="mobile"

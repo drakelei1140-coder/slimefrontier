@@ -1,16 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmfn4shrapibl"]
+[gd_scene load_steps=11 format=3 uid="uid://cmfn4shrapibl"]
 
 [ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
 [ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
 [ext_resource type="PackedScene" uid="uid://viqjen2gswl8" path="res://main/pureslime.tscn" id="3_v3ojx"]
+[ext_resource type="PackedScene" uid="uid://b0lt2mqptlvq7" path="res://main/enemy_01.tscn" id="5_j015t"]
 [ext_resource type="Script" uid="uid://bsrp7my386qil" path="res://main/EnemyManager.gd" id="5_v3ojx"]
-[ext_resource type="Script" uid="uid://b5jvnxtqm46hk" path="res://main/WeaponsManager.gd" id="6_f7m14"]
-[ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="6_yyuar"]
-[ext_resource type="Script" uid="uid://bbntw3hcehnai" path="res://main/ProjectileManager.gd" id="7_yyuar"]
 [ext_resource type="Script" uid="uid://dejwruss64750" path="res://main/SummonManager.gd" id="8_0coyo"]
-[ext_resource type="Script" uid="uid://cf8nlyr8da1xk" path="res://main/Enemy_01.gd" id="8_p6qvs"]
+[ext_resource type="PackedScene" uid="uid://c34l1he2h2chx" path="res://main/weapons.tscn" id="8_v3ojx"]
 [ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/HUD.gd" id="9_4u4fy"]
-[ext_resource type="Script" uid="uid://b64plejtjgtel" path="res://main/hurtbox_ememy.gd" id="10_0coyo"]
+[ext_resource type="PackedScene" uid="uid://bb1qcbw1x6uah" path="res://main/projectile_basic.tscn" id="9_v3ojx"]
 [ext_resource type="Script" uid="uid://doqy6mxgnxlrg" path="res://main/scripts/ui/DebugPanel.gd" id="12_v3ojx"]
 
 [node name="Game" type="Node2D"]
@@ -37,24 +35,11 @@ script = ExtResource("2_4u4fy")
 [node name="Enemies" type="Node2D" parent="Entities"]
 script = ExtResource("5_v3ojx")
 
-[node name="Enemy_01" type="CharacterBody2D" parent="Entities/Enemies"]
-script = ExtResource("8_p6qvs")
+[node name="Enemy_01" parent="Entities/Enemies" instance=ExtResource("5_j015t")]
 
-[node name="Hurtbox2" type="Area2D" parent="Entities/Enemies/Enemy_01"]
-script = ExtResource("10_0coyo")
+[node name="Weapons" parent="Entities" instance=ExtResource("8_v3ojx")]
 
-[node name="StateMachine" type="Node" parent="Entities/Enemies/Enemy_01"]
-script = ExtResource("6_yyuar")
-
-[node name="Visual" type="Node2D" parent="Entities/Enemies/Enemy_01"]
-
-[node name="Enemy01Visual" type="Node2D" parent="Entities/Enemies/Enemy_01/Visual"]
-
-[node name="Weapons" type="Node2D" parent="."]
-script = ExtResource("6_f7m14")
-
-[node name="Projectiles" type="Node2D" parent="."]
-script = ExtResource("7_yyuar")
+[node name="projectile_basic" parent="Entities" instance=ExtResource("9_v3ojx")]
 
 [node name="Summons" type="Node2D" parent="."]
 script = ExtResource("8_0coyo")

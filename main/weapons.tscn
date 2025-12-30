@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c34l1he2h2chx"]
+
+[ext_resource type="Script" uid="uid://b5jvnxtqm46hk" path="res://main/WeaponsManager.gd" id="1_68cq5"]
+[ext_resource type="Script" uid="uid://dcmvrywc6prxp" path="res://main/scripts/actors/weapons/Weapon_Musket.gd" id="2_d283d"]
+[ext_resource type="Script" uid="uid://dbghl6d05xc72" path="res://main/scripts/actors/combat/Hitbox.gd" id="3_7gyhh"]
+
+[node name="Weapons" type="Node2D"]
+script = ExtResource("1_68cq5")
+
+[node name="musket" type="Node2D" parent="."]
+script = ExtResource("2_d283d")
+
+[node name="AttackHitbox" type="Area2D" parent="musket"]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("3_7gyhh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="musket/AttackHitbox"]
+
+[node name="Muzzle" type="Marker2D" parent="musket"]
+
+[node name="Visual" type="Node2D" parent="musket"]
