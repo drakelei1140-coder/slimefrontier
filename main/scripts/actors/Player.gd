@@ -10,6 +10,9 @@ Player：输入层
 
 @onready var cached_visual_controller: Node = $Visual/PureSlimeVisual
 
+@export var character_id: StringName = &"slime_pure"
+@export var character_def_override: CharacterDef
+@export var character_level: int = 1
 
 func _ready() -> void:
 	# 把表现层引用交给 ActorBase
@@ -23,8 +26,19 @@ func _ready() -> void:
 	if is_instance_valid(role_hurtbox):
 		role_hurtbox.hurtbox_hit.connect(_on_role_hurtbox_hit)
 
+	var character_def: CharacterDef = character_def_override
+	if character_def == null:
+		character_def = character_data_manager.get_character_def(character_id)
+	if character_def == null:
+		push_error("Player: character_def is null, character_id=%s" % str(character_id))
+		return
+
+	role_init_runtime_stats(character_def, character_level)
 	# 调用基类初始化
 	super._ready()
+
+func _enter_tree() -> void:
+	add_to_group("player")
 
 func _on_role_hurtbox_hit(damage: int, stagger: float, _source: Node) -> void:
 	# 统一走 ActorBase 的入口（你已有）

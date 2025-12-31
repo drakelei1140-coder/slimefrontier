@@ -33,6 +33,11 @@ var role_current_operation_state = RoleOperationState.IDLE
 
 var dash_invincible_has_ended: bool = false
 
+
+signal runtime_stats_changed
+
+var runtime_stats: RuntimeStats = null
+
 # =========================
 # 输入（由外部每帧写入）
 # =========================
@@ -91,6 +96,24 @@ func _ready() -> void:
 
 	_enter_role_operation_state(RoleOperationState.IDLE)
 
+
+func role_init_runtime_stats(character_def: CharacterDef, level: int) -> void:
+	runtime_stats = RuntimeStats.new()
+	runtime_stats.stats_changed.connect(_on_runtime_stats_changed)
+	runtime_stats.init_from_character_def(character_def, level)
+
+	# 同步占位字段（避免开局还是 1）
+	role_current_hp = runtime_stats.hp
+
+	#role_current_hp = runtime_stats.hp
+	#role_base_move_speed = runtime_stats.move_speed
+
+	emit_signal("runtime_stats_changed")
+
+
+
+func _on_runtime_stats_changed() -> void:
+	emit_signal("runtime_stats_changed")
 
 func _physics_process(delta: float) -> void:
 	# -------------------------
@@ -322,7 +345,10 @@ func _enter_dead_state() -> void:
 # 对外接口：移动速度
 # =========================================================
 func get_role_current_move_speed() -> float:
-	return role_base_move_speed * role_move_speed_multiplier + role_move_speed_addition
+	var base_speed := role_base_move_speed
+	if runtime_stats != null:
+		base_speed = runtime_stats.move_speed
+	return base_speed * role_move_speed_multiplier + role_move_speed_addition
 
 
 # =========================================================
@@ -375,11 +401,21 @@ func role_apply_hit(damage: int, stagger_duration: float = -1.0) -> void:
 	if role_is_currently_invincible():
 		return
 
-	# 扣血（占位）
-	role_current_hp -= damage
+	# -------------------------
+	# 扣血（接入 RuntimeStats）
+	# -------------------------
+	var _applied_damage: int = damage
+
+	if runtime_stats != null:
+		_applied_damage = runtime_stats.apply_damage(damage)
+		# 如果你还保留 role_current_hp 用于旧 UI/调试，这里同步一下（可选）
+		role_current_hp = runtime_stats.hp
+	else:
+		# 兼容旧逻辑
+		role_current_hp -= damage
 
 	# 死亡优先
-	if role_current_hp <= 0:
+	if (runtime_stats != null and runtime_stats.is_dead()) or (runtime_stats == null and role_current_hp <= 0):
 		role_die()
 		return
 
@@ -390,12 +426,13 @@ func role_apply_hit(damage: int, stagger_duration: float = -1.0) -> void:
 
 	# 刷新硬直（不叠加，只刷新剩余时间）
 	if final_stagger > 0.0:
-	# 如果当前正在 DASH（且能进到这里说明已经不是无敌帧），那么硬直会打断 dash
+		# 如果当前正在 DASH（且能进到这里说明已经不是无敌帧），那么硬直会打断 dash
 		if role_current_operation_state == RoleOperationState.DASH:
 			_dash_force_terminate_and_restart_cooldown()
 
 		stagger_remaining_time = maxf(final_stagger, 0.0)
 		_change_role_operation_state(RoleOperationState.STAGGER)
+
 
 
 # =========================================================
@@ -427,3 +464,8 @@ func visual_stop_dash_afterimage() -> void:
 func visual_play_stagger_animation() -> void:
 	if is_instance_valid(role_visual_controller) and role_visual_controller.has_method("visual_play_stagger_animation"):
 		role_visual_controller.call("visual_play_stagger_animation")
+
+func role_get_move_speed() -> float:
+	if runtime_stats != null:
+		return runtime_stats.move_speed
+	return 0.0
