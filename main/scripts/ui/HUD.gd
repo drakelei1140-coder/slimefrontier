@@ -4,6 +4,7 @@ class_name HUD
 @export var player_path: NodePath  # 可选：如果你想手动拖拽，就用它；不用也行
 
 @onready var hp_bar: TextureProgressBar = $HPBar
+@onready var hp_progress_bar: ProgressBar = $HP_ProgressBar
 
 var _player: Node = null
 
@@ -42,6 +43,12 @@ func _refresh_hp_bar() -> void:
 	if rs == null:
 		return
 
+	# 旧的 TextureProgressBar
 	hp_bar.min_value = 0
 	hp_bar.max_value = rs.max_hp
 	hp_bar.value = rs.hp
+
+	# 新的 ProgressBar（HP_ProgressBar）
+	hp_progress_bar.min_value = 0
+	hp_progress_bar.max_value = rs.max_hp
+	hp_progress_bar.value = rs.hp

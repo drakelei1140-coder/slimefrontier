@@ -433,7 +433,6 @@ scale = Vector2(0.14453125, 0.14453125)
 texture = ExtResource("9_0uise")
 
 [node name="HpBarAnchor" type="Marker2D" parent="Visual/PureSlimeVisual"]
-position = Vector2(-45, -56)
 
 [node name="GhostPath" type="Path2D" parent="Visual/PureSlimeVisual"]
 position = Vector2(-6, 6)
@@ -495,6 +494,7 @@ visible = false
 [node name="CombatHooks" type="Node" parent="."]
 
 [node name="ActorHpBar" parent="." instance=ExtResource("12_ms6vc")]
-position = Vector2(-48, -70.00001)
-scale = Vector2(0.195, 0.395)
+position = Vector2(-46, -49.000004)
+scale = Vector2(0.18, 0.3)
 anchor_path = NodePath("../Visual/PureSlimeVisual/HpBarAnchor")
+bar_size = Vector2(40, 16)

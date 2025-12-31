@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmfn4shrapibl"]
+[gd_scene load_steps=16 format=3 uid="uid://cmfn4shrapibl"]
 
 [ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
 [ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
@@ -10,8 +10,25 @@
 [ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/scripts/ui/HUD.gd" id="9_4u4fy"]
 [ext_resource type="PackedScene" uid="uid://bb1qcbw1x6uah" path="res://main/projectile_basic.tscn" id="9_v3ojx"]
 [ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/HPBar_Under.png" id="10_f7m14"]
+[ext_resource type="Texture2D" uid="uid://gi8w253bpiht" path="res://img/HPBar_Over.png" id="11_yyuar"]
 [ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/HPBar_Progress.png" id="12_0coyo"]
 [ext_resource type="Script" uid="uid://doqy6mxgnxlrg" path="res://main/scripts/ui/DebugPanel.gd" id="12_v3ojx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7m14"]
+bg_color = Color(1, 1, 1, 0.39607844)
+border_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yyuar"]
+bg_color = Color(1, 0.2901961, 0.2901961, 1)
+border_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_2c7eb")
@@ -56,12 +73,28 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_4u4fy")
 
-[node name="HPBar" type="TextureProgressBar" parent="UI/HUD"]
+[node name="HP_ProgressBar" type="ProgressBar" parent="UI/HUD"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 12.0
+offset_top = 48.0
+offset_right = 112.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/background = SubResource("StyleBoxFlat_f7m14")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yyuar")
+
+[node name="HPBar" type="TextureProgressBar" parent="UI/HUD"]
+clip_contents = true
+layout_direction = 2
+layout_mode = 0
+offset_left = 12.0
+offset_top = 23.0
+offset_right = 524.0
+offset_bottom = 55.0
+scale = Vector2(0.2, 0.35)
 max_value = 99.9
 texture_under = ExtResource("10_f7m14")
+texture_over = ExtResource("11_yyuar")
 texture_progress = ExtResource("12_0coyo")
 
 [node name="ExpBar" type="TextureProgressBar" parent="UI/HUD"]
