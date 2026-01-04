@@ -433,6 +433,8 @@ func role_apply_hit(damage: int, stagger_duration: float = -1.0) -> void:
 		stagger_remaining_time = maxf(final_stagger, 0.0)
 		_change_role_operation_state(RoleOperationState.STAGGER)
 
+func apply_damage(damage_amount: int, _source: Node = null) -> void:
+	role_apply_hit(damage_amount, 0.0)
 
 
 # =========================================================
