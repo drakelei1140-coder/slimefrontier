@@ -360,9 +360,10 @@ func get_role_current_move_speed() -> float:
 # 对外接口：无敌判定（Dash 无敌帧）
 # =========================================================
 func role_is_currently_invincible() -> bool:
-	# 必须“正在Dash” 并且 “dash开始后经过时间 <= 无敌帧时长”
-	var dash_invincible_active := role_current_operation_state == RoleOperationState.DASH \
+	var dash_invincible_active: bool = (
+		role_current_operation_state == RoleOperationState.DASH
 		and dash_elapsed_time_since_start <= dash_invincible_duration
+	)
 	return dash_invincible_active or _is_hit_invincible_active()
 
 # =========================================================

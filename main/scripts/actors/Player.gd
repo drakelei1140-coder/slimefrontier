@@ -1,10 +1,11 @@
 extends "res://main/scripts/actors/ActorBase.gd"
+
 class_name Player
-"""
-Player：输入层
-- 负责：读取 InputMap，把输入写入 ActorBase 的 input_* 字段
-- 逻辑运算：全部交给 ActorBase（状态机、dash、无敌帧等）
-"""
+#"""
+#Player：输入层
+#- 负责：读取 InputMap，把输入写入 ActorBase 的 input_* 字段
+#- 逻辑运算：全部交给 ActorBase（状态机、dash、无敌帧等）
+#"""
 
 @export var input_move_deadzone: float = 0.25
 
