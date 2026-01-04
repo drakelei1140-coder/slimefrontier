@@ -33,6 +33,8 @@ var role_current_operation_state = RoleOperationState.IDLE
 
 var dash_invincible_has_ended: bool = false
 
+@export var hit_invincible_duration: float = 0.25
+
 
 signal runtime_stats_changed
 
@@ -64,6 +66,7 @@ var dash_remaining_cooldown_time: float = 0.0             # 冲刺剩余冷却�
 # Stagger 运行时状态
 # =========================
 var stagger_remaining_time: float = 0.0                   # 当前硬直剩余时间
+var _hit_invincible_remaining_time: float = 0.0           # 受击冷却剩余时间
 
 # =========================
 # 面向与方向记忆
@@ -121,6 +124,8 @@ func _physics_process(delta: float) -> void:
 	# -------------------------
 	if dash_remaining_cooldown_time > 0.0:
 		dash_remaining_cooldown_time = maxf(dash_remaining_cooldown_time - delta, 0.0)
+
+	_update_hit_invincible(delta)
 
 	# -------------------------
 	# 2) 更新面向/方向记忆（用于 idle dash 的方向）
@@ -356,8 +361,9 @@ func get_role_current_move_speed() -> float:
 # =========================================================
 func role_is_currently_invincible() -> bool:
 	# 必须“正在Dash” 并且 “dash开始后经过时间 <= 无敌帧时长”
-	return role_current_operation_state == RoleOperationState.DASH \
+	var dash_invincible_active := role_current_operation_state == RoleOperationState.DASH \
 		and dash_elapsed_time_since_start <= dash_invincible_duration
+	return dash_invincible_active or _is_hit_invincible_active()
 
 # =========================================================
 # Dash 无敌帧结束后的“重叠补算受击”
@@ -433,6 +439,8 @@ func role_apply_hit(damage: int, stagger_duration: float = -1.0) -> void:
 		stagger_remaining_time = maxf(final_stagger, 0.0)
 		_change_role_operation_state(RoleOperationState.STAGGER)
 
+	_start_hit_invincible()
+
 func apply_damage(damage_amount: int, _source: Node = null) -> void:
 	role_apply_hit(damage_amount, 0.0)
 
@@ -471,3 +479,19 @@ func role_get_move_speed() -> float:
 	if runtime_stats != null:
 		return runtime_stats.move_speed
 	return 0.0
+
+
+func _is_hit_invincible_active() -> bool:
+	return _hit_invincible_remaining_time > 0.0
+
+
+func _start_hit_invincible() -> void:
+	if hit_invincible_duration <= 0.0:
+		return
+	_hit_invincible_remaining_time = hit_invincible_duration
+
+
+func _update_hit_invincible(delta: float) -> void:
+	if _hit_invincible_remaining_time <= 0.0:
+		return
+	_hit_invincible_remaining_time = maxf(_hit_invincible_remaining_time - delta, 0.0)
