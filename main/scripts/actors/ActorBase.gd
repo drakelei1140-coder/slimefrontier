@@ -30,6 +30,7 @@ var role_current_operation_state = RoleOperationState.IDLE
 
 # ---- Stagger（硬直）参数 ----
 @export var stagger_default_duration: float = 0.25         # 默认硬直时间
+@export_range(0.05, 0.2, 0.01) var contact_stagger_duration: float = 0.12   # 接触延迟时间
 
 var dash_invincible_has_ended: bool = false
 
@@ -445,6 +446,12 @@ func role_apply_hit(damage: int, stagger_duration: float = -1.0) -> void:
 func apply_damage(damage_amount: int, _source: Node = null) -> void:
 	role_apply_hit(damage_amount, 0.0)
 
+func apply_contact_damage(damage_amount: int, _source: Node = null) -> void:
+	if role_is_currently_invincible():
+		return
+
+	var stagger_for_contact: float = clampf(contact_stagger_duration, 0.05, 0.2)
+	role_apply_hit(damage_amount, stagger_for_contact)
 
 # =========================================================
 # 对外接口：死亡

@@ -127,5 +127,7 @@ func _apply_contact_damage_to_target(target: ActorBase) -> void:
 	if not is_instance_valid(target):
 		return
 
-	if target.has_method("apply_damage"):
+	if target.has_method("apply_contact_damage"):
+		target.apply_contact_damage(contact_damage_amount, self)
+	elif target.has_method("apply_damage"):
 		target.apply_damage(contact_damage_amount, self)
