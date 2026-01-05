@@ -34,7 +34,7 @@ var role_current_operation_state = RoleOperationState.IDLE
 
 var dash_invincible_has_ended: bool = false
 
-@export var hit_invincible_duration: float = 0.4   #无敌时间
+@export var hit_invincible_duration: float = 0.5   #无敌时间
 
 
 signal runtime_stats_changed

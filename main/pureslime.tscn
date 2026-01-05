@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b8rwlonx3dd0x" path="res://main/actor_hp_bar.tscn" id="12_ms6vc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dmoso"]
-radius = 30.0
+radius = 28.0
 
 [sub_resource type="Curve2D" id="Curve2D_bc3cr"]
 _data = {
