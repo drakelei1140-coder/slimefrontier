@@ -32,6 +32,7 @@ script = ExtResource("3_es8kg")
 hitbox_team = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(-53, -58)
 shape = SubResource("CircleShape2D_es8kg")
 
 [node name="ContactDamageArea" type="Area2D" parent="."]
