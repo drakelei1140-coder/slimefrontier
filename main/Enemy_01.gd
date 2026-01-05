@@ -4,12 +4,25 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-@onready var enemy_attack_hitbox: Area2D = $AttackHitbox
+@export var attack_cd: float = 3.0
+@export var swing_duration: float = 1.0
+@export var start_angle_offset: float = -PI / 3.0
+@export var hitbox_radius: float = 40.0
+@export var attack_damage: int = 2
+@export var attack_target_group: StringName = &"player"
+
+var _attack_cd_left: float = 0.0
+var _swing_active: bool = false
+var _swing_elapsed: float = 0.0
+var _swing_start_angle: float = 0.0
+
+@onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var attack_hitbox_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
 
 func _ready() -> void:
-	enemy_attack_hitbox.monitoring = false
-	enemy_attack_hitbox.monitorable = false
-	enemy_set_attack_hitbox_active(false)
+	_set_attack_hitbox_active(false)
+	attack_hitbox.area_entered.connect(_on_attack_hitbox_area_entered)
+
 	var role_hurtbox: HurtboxEnemy = $Hurtbox as HurtboxEnemy
 	if is_instance_valid(role_hurtbox):
 		role_hurtbox.hurtbox_hit.connect(_on_role_hurtbox_hit)
@@ -22,6 +35,8 @@ func _on_role_hurtbox_hit(damage: int, stagger: float, _source: Node) -> void:
 	print("Enemy hit! damage=", damage, " stagger=", stagger)
 
 func _physics_process(delta: float) -> void:
+	_update_attack(delta)
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -39,8 +54,94 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-	
-func enemy_set_attack_hitbox_active(is_active: bool) -> void:
 
-	enemy_attack_hitbox.monitoring = is_active
-	enemy_attack_hitbox.monitorable = is_active
+func _update_attack(delta: float) -> void:
+	if _swing_active:
+		_swing_elapsed += delta
+		_update_attack_hitbox_position()
+
+		if _swing_elapsed >= swing_duration:
+			_end_swing()
+		return
+
+	_attack_cd_left = maxf(_attack_cd_left - delta, 0.0)
+	if _attack_cd_left <= 0.0:
+		_start_swing()
+
+
+func _start_swing() -> void:
+	_swing_active = true
+	_swing_elapsed = 0.0
+
+	var dir_to_player := _get_direction_to_target()
+	_swing_start_angle = dir_to_player.angle() + start_angle_offset
+
+	_set_attack_hitbox_active(true)
+	_update_attack_hitbox_position()
+
+
+func _end_swing() -> void:
+	_swing_active = false
+	_swing_elapsed = 0.0
+	_attack_cd_left = attack_cd
+	_set_attack_hitbox_active(false)
+	attack_hitbox.position = Vector2.ZERO
+
+
+func _update_attack_hitbox_position() -> void:
+	var duration := maxf(swing_duration, 0.001)
+	var angle := _swing_start_angle + (_swing_elapsed / duration) * TAU
+	attack_hitbox.position = Vector2(cos(angle), sin(angle)) * hitbox_radius
+
+
+func _get_direction_to_target() -> Vector2:
+	var targets := get_tree().get_nodes_in_group(attack_target_group)
+	for target in targets:
+		var node2d := target as Node2D
+		if node2d == null:
+			continue
+
+		var to_target := node2d.global_position - global_position
+		if to_target.length() > 0.001:
+			return to_target.normalized()
+	return Vector2.RIGHT
+
+
+func _set_attack_hitbox_active(is_active: bool) -> void:
+	attack_hitbox.visible = is_active
+	attack_hitbox.monitoring = is_active
+	attack_hitbox.monitorable = is_active
+	if is_instance_valid(attack_hitbox_shape):
+		attack_hitbox_shape.disabled = not is_active
+
+
+func _on_attack_hitbox_area_entered(area: Area2D) -> void:
+	var target := _resolve_attack_target(area)
+	if target == null:
+		return
+
+	_apply_attack_damage_to_target(target)
+
+
+func _resolve_attack_target(node: Node) -> ActorBase:
+	var actor := node as ActorBase
+	if actor == null and node.get_parent() != null:
+		actor = node.get_parent() as ActorBase
+
+	if actor == null:
+		return null
+
+	if attack_target_group != StringName("") and not actor.is_in_group(attack_target_group):
+		return null
+
+	return actor
+
+
+func _apply_attack_damage_to_target(target: ActorBase) -> void:
+	if not is_instance_valid(target):
+		return
+
+	if target.has_method("apply_damage"):
+		target.apply_damage(attack_damage, self)
+	elif target.has_method("apply_contact_damage"):
+		target.apply_contact_damage(attack_damage, self)
