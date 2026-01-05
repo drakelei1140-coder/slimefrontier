@@ -30,11 +30,11 @@ var role_current_operation_state = RoleOperationState.IDLE
 
 # ---- Stagger（硬直）参数 ----
 @export var stagger_default_duration: float = 0.25         # 默认硬直时间
-@export_range(0.05, 0.2, 0.01) var contact_stagger_duration: float = 0.12   # 接触延迟时间
+@export_range(0.05, 0.2, 0.01) var contact_stagger_duration: float = 0.1   # 接触延迟时间
 
 var dash_invincible_has_ended: bool = false
 
-@export var hit_invincible_duration: float = 0.25
+@export var hit_invincible_duration: float = 0.4   #无敌时间
 
 
 signal runtime_stats_changed

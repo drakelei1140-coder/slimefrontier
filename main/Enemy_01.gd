@@ -4,7 +4,12 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+@onready var enemy_attack_hitbox: Area2D = $AttackHitbox
+
 func _ready() -> void:
+	enemy_attack_hitbox.monitoring = false
+	enemy_attack_hitbox.monitorable = false
+	enemy_set_attack_hitbox_active(false)
 	var role_hurtbox: HurtboxEnemy = $Hurtbox as HurtboxEnemy
 	if is_instance_valid(role_hurtbox):
 		role_hurtbox.hurtbox_hit.connect(_on_role_hurtbox_hit)
@@ -34,3 +39,8 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	
+func enemy_set_attack_hitbox_active(is_active: bool) -> void:
+
+	enemy_attack_hitbox.monitoring = is_active
+	enemy_attack_hitbox.monitorable = is_active

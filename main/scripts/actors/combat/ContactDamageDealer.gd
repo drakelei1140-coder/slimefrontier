@@ -1,8 +1,8 @@
 extends Area2D
 class_name ContactDamageDealer
 
-@export var contact_damage_amount: int = 1
-@export var contact_damage_interval: float = 0.5
+@export var contact_damage_amount: int = 1    #每次接触造成的伤害
+@export var contact_damage_interval: float = 0.5    #接触伤害的频率
 @export var contact_apply_on_enter: bool = true
 @export var contact_target_group: StringName = &"player"
 
