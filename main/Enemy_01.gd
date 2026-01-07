@@ -9,6 +9,7 @@ const JUMP_VELOCITY = -400.0
 @export var start_angle_offset: float = -PI / 3.0
 @export var hitbox_radius: float = 40.0
 @export var attack_damage: int = 2
+@export var attack_stagger: float = 0.15
 @export var attack_target_group: StringName = &"player"
 
 var _attack_cd_left: float = 0.0
@@ -16,12 +17,13 @@ var _swing_active: bool = false
 var _swing_elapsed: float = 0.0
 var _swing_start_angle: float = 0.0
 
-@onready var attack_hitbox: Area2D = $AttackHitbox
-@onready var attack_hitbox_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
+@onready var attack_hitbox: OneShotDamageDealer = $AttackHitbox
 
 func _ready() -> void:
-	_set_attack_hitbox_active(false)
-	attack_hitbox.area_entered.connect(_on_attack_hitbox_area_entered)
+	attack_hitbox.set_active(false)
+	attack_hitbox.damage_amount = attack_damage
+	attack_hitbox.stagger_amount = attack_stagger
+	attack_hitbox.target_group = attack_target_group
 
 	var role_hurtbox: HurtboxEnemy = $Hurtbox as HurtboxEnemy
 	if is_instance_valid(role_hurtbox):
@@ -76,7 +78,8 @@ func _start_swing() -> void:
 	var dir_to_player := _get_direction_to_target()
 	_swing_start_angle = dir_to_player.angle() + start_angle_offset
 
-	_set_attack_hitbox_active(true)
+	attack_hitbox.begin_attack()
+	attack_hitbox.set_active(true)
 	_update_attack_hitbox_position()
 
 
@@ -84,7 +87,7 @@ func _end_swing() -> void:
 	_swing_active = false
 	_swing_elapsed = 0.0
 	_attack_cd_left = attack_cd
-	_set_attack_hitbox_active(false)
+	attack_hitbox.set_active(false)
 	attack_hitbox.position = Vector2.ZERO
 
 
@@ -105,43 +108,3 @@ func _get_direction_to_target() -> Vector2:
 		if to_target.length() > 0.001:
 			return to_target.normalized()
 	return Vector2.RIGHT
-
-
-func _set_attack_hitbox_active(is_active: bool) -> void:
-	attack_hitbox.visible = is_active
-	attack_hitbox.monitoring = is_active
-	attack_hitbox.monitorable = is_active
-	if is_instance_valid(attack_hitbox_shape):
-		attack_hitbox_shape.disabled = not is_active
-
-
-func _on_attack_hitbox_area_entered(area: Area2D) -> void:
-	var target := _resolve_attack_target(area)
-	if target == null:
-		return
-
-	_apply_attack_damage_to_target(target)
-
-
-func _resolve_attack_target(node: Node) -> ActorBase:
-	var actor := node as ActorBase
-	if actor == null and node.get_parent() != null:
-		actor = node.get_parent() as ActorBase
-
-	if actor == null:
-		return null
-
-	if attack_target_group != StringName("") and not actor.is_in_group(attack_target_group):
-		return null
-
-	return actor
-
-
-func _apply_attack_damage_to_target(target: ActorBase) -> void:
-	if not is_instance_valid(target):
-		return
-
-	if target.has_method("apply_damage"):
-		target.apply_damage(attack_damage, self)
-	elif target.has_method("apply_contact_damage"):
-		target.apply_contact_damage(attack_damage, self)
