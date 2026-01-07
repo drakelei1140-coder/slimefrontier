@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cf8nlyr8da1xk" path="res://main/Enemy_01.gd" id="1_igf4t"]
 [ext_resource type="Script" uid="uid://b64plejtjgtel" path="res://main/scripts/actors/combat/hurtbox_ememy.gd" id="2_capf1"]
-[ext_resource type="Script" uid="uid://dbghl6d05xc72" path="res://main/scripts/actors/combat/Hitbox.gd" id="3_es8kg"]
+[ext_resource type="Script" uid="uid://bfc3elreo3hkw" path="res://main/scripts/actors/combat/OneShotDamageDealer.gd" id="3_gowdl"]
 [ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_p0vte"]
 [ext_resource type="Script" uid="uid://1lxy25lewi3" path="res://main/scripts/visual/EnemyVisualController.gd" id="5_1bcvn"]
 [ext_resource type="Script" uid="uid://c1huwhdo8fj0c" path="res://main/scripts/actors/combat/ContactDamageDealer.gd" id="6_3orhq"]
@@ -16,6 +16,7 @@ radius = 30.0
 [node name="Enemy_01" type="CharacterBody2D"]
 position = Vector2(256, 0)
 script = ExtResource("1_igf4t")
+hitbox_radius = 60.0
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
@@ -28,11 +29,9 @@ shape = SubResource("CircleShape2D_p0vte")
 [node name="AttackHitbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
-script = ExtResource("3_es8kg")
-hitbox_team = 1
+script = ExtResource("3_gowdl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
-position = Vector2(-53, -58)
 shape = SubResource("CircleShape2D_es8kg")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="AttackHitbox/CollisionShape2D"]
