@@ -17,7 +17,7 @@ var _swing_active: bool = false
 var _swing_elapsed: float = 0.0
 var _swing_start_angle: float = 0.0
 
-@onready var attack_hitbox: OneShotDamageDealer = $AttackHitbox
+@onready var attack_hitbox:OneShotDamageDealer = $AttackHitbox
 
 func _ready() -> void:
 	attack_hitbox.set_active(false)
