@@ -132,17 +132,34 @@ func _start_movement_loop(enemy: Node2D) -> void:
 
 	_sequence_tween = create_tween()
 	_sequence_tween.set_loops()
-	_sequence_tween.tween_property(enemy, "global_position", TARGET_LEFT, MOVE_DURATION)
-	_sequence_tween.tween_callback(func() -> void:
-		if sprite != null:
-			sprite.flip_h = false
-		_handle_first_arrival(enemy)
-	)
-	_sequence_tween.tween_property(enemy, "global_position", SPAWN_RIGHT, MOVE_DURATION)
-	_sequence_tween.tween_callback(func() -> void:
-		if sprite != null:
-			sprite.flip_h = true
-	)
+	var distance_to_right := enemy.global_position.distance_to(SPAWN_RIGHT)
+	var distance_to_left := enemy.global_position.distance_to(TARGET_LEFT)
+	var go_left_first := distance_to_right <= distance_to_left
+
+	if go_left_first:
+		_sequence_tween.tween_property(enemy, "global_position", TARGET_LEFT, MOVE_DURATION)
+		_sequence_tween.tween_callback(func() -> void:
+			if sprite != null:
+				sprite.flip_h = false
+			_on_reach_left(enemy)
+		)
+		_sequence_tween.tween_property(enemy, "global_position", SPAWN_RIGHT, MOVE_DURATION)
+		_sequence_tween.tween_callback(func() -> void:
+			if sprite != null:
+				sprite.flip_h = true
+		)
+	else:
+		_sequence_tween.tween_property(enemy, "global_position", SPAWN_RIGHT, MOVE_DURATION)
+		_sequence_tween.tween_callback(func() -> void:
+			if sprite != null:
+				sprite.flip_h = true
+		)
+		_sequence_tween.tween_property(enemy, "global_position", TARGET_LEFT, MOVE_DURATION)
+		_sequence_tween.tween_callback(func() -> void:
+			if sprite != null:
+				sprite.flip_h = false
+			_on_reach_left(enemy)
+		)
 
 
 func _get_visual_controller(enemy: Node2D) -> Node:
@@ -157,21 +174,26 @@ func _get_enemy_sprite(enemy: Node2D) -> Sprite2D:
 	return enemy.get_node_or_null("Visual/Enemy01Visual/WingsSprite") as Sprite2D
 
 
-func _handle_first_arrival(enemy: Node2D) -> void:
+func _on_reach_left(enemy: Node2D) -> void:
 	if _first_arrival_handled:
 		return
 	if _should_stop_sequence(enemy):
 		return
 
 	_first_arrival_handled = true
+	if _sequence_tween != null:
+		_sequence_tween.kill()
+		_sequence_tween = null
 
 	var visual := _get_visual_controller(enemy)
 	if visual != null and visual.has_method("apply_state"):
 		visual.call("apply_state", "stagger")
 
-	await get_tree().create_timer(1.0).timeout
-	if _should_stop_sequence(enemy):
-		return
-
-	if enemy.has_method("trigger_attack"):
-		enemy.call("trigger_attack")
+	var timer := get_tree().create_timer(1.0)
+	timer.timeout.connect(func() -> void:
+		if _should_stop_sequence(enemy):
+			return
+		if enemy.has_method("trigger_attack"):
+			enemy.call("trigger_attack")
+		_start_movement_loop(enemy)
+	)
