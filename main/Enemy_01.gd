@@ -19,6 +19,7 @@ var _swing_elapsed: float = 0.0
 var _swing_start_angle: float = 0.0
 
 @onready var attack_hitbox:OneShotDamageDealer = $AttackHitbox
+@onready var visual_controller: EnemyVisualController = $Visual/Enemy01Visual as EnemyVisualController
 
 func _ready() -> void:
 	attack_hitbox.set_active(false)
@@ -86,6 +87,9 @@ func _start_swing() -> void:
 
 	var dir_to_player := _get_direction_to_target()
 	_swing_start_angle = dir_to_player.angle() + start_angle_offset
+
+	if is_instance_valid(visual_controller):
+		visual_controller.apply_state("attack")
 
 	attack_hitbox.begin_attack()
 	attack_hitbox.set_active(true)
