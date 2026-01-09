@@ -153,6 +153,8 @@ func _start_attack_loop(enemy: Node2D) -> void:
 
 	while _attack_loop_active:
 		await get_tree().create_timer(attack_cd).timeout
+		if not is_instance_valid(enemy):
+			return
 		if _should_stop_sequence(enemy):
 			return
 
