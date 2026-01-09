@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmfn4shrapibl"]
+[gd_scene load_steps=18 format=3 uid="uid://cmfn4shrapibl"]
 
 [ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
 [ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c34l1he2h2chx" path="res://main/weapons.tscn" id="8_v3ojx"]
 [ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/scripts/ui/HUD.gd" id="9_4u4fy"]
 [ext_resource type="PackedScene" uid="uid://bb1qcbw1x6uah" path="res://main/projectile_basic.tscn" id="9_v3ojx"]
+[ext_resource type="Script" uid="uid://dwp0fkowcwlpw" path="res://main/Enemy01TestDirector.gd" id="10_0i1y6"]
 [ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/HPBar_Under.png" id="10_f7m14"]
 [ext_resource type="Texture2D" uid="uid://gi8w253bpiht" path="res://img/HPBar_Over.png" id="11_yyuar"]
 [ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/HPBar_Progress.png" id="12_0coyo"]
@@ -42,6 +43,11 @@ game_player_packed_scene = ExtResource("3_v3ojx")
 [node name="World" type="Node2D" parent="."]
 script = ExtResource("2_4u4fy")
 
+[node name="Enemy01TestDirector" type="Node" parent="World"]
+script = ExtResource("10_0i1y6")
+enemy_scene = ExtResource("5_j015t")
+enemy_parent = NodePath("../../Entities/Enemies")
+
 [node name="Props" type="Node2D" parent="World"]
 
 [node name="Decoration" type="Node2D" parent="World/Props"]
@@ -56,8 +62,6 @@ script = ExtResource("2_4u4fy")
 
 [node name="Enemies" type="Node2D" parent="Entities"]
 script = ExtResource("5_v3ojx")
-
-[node name="Enemy_01" parent="Entities/Enemies" instance=ExtResource("5_j015t")]
 
 [node name="Weapons" parent="Entities" instance=ExtResource("8_v3ojx")]
 
@@ -157,6 +161,7 @@ offset_bottom = 300.0
 grow_horizontal = 0
 script = ExtResource("12_v3ojx")
 ui_debug_game_node_path = NodePath("../../..")
+enemy01_test_director_path = NodePath("../../../World/Enemy01TestDirector")
 
 [node name="TextEdit" type="TextEdit" parent="UI/DebugRoot/DebugPanel"]
 layout_mode = 1
