@@ -195,4 +195,20 @@ offset_right = 101.0
 offset_bottom = 129.0
 text = "硬直"
 
+[node name="BtnSpawnEnemy" type="Button" parent="UI/DebugRoot/DebugPanel"]
+layout_mode = 0
+offset_left = -85.0
+offset_top = 11.0
+offset_right = 5.0
+offset_bottom = 47.0
+text = "怪物出生"
+
+[node name="BtnKillEnemy" type="Button" parent="UI/DebugRoot/DebugPanel"]
+layout_mode = 0
+offset_left = -85.0
+offset_top = 52.0
+offset_right = 5.0
+offset_bottom = 88.0
+text = "怪物死亡"
+
 [node name="Camera2D" type="Camera2D" parent="."]
