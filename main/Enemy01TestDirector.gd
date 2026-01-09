@@ -11,17 +11,20 @@ const MOVE_DURATION := 1.5
 var current_enemy: Node2D = null
 var _spawn_button: Button = null
 var _kill_button: Button = null
+var _stagger_button: Button = null
 var _is_killing: bool = false
 var _sequence_tween: Tween = null
+var _attack_loop_active: bool = false
 
 
 func _ready() -> void:
 	update_ui_state()
 
 
-func register_debug_buttons(spawn_button: Button, kill_button: Button) -> void:
+func register_debug_buttons(spawn_button: Button, kill_button: Button, stagger_button: Button) -> void:
 	_spawn_button = spawn_button
 	_kill_button = kill_button
+	_stagger_button = stagger_button
 	update_ui_state()
 
 
@@ -47,6 +50,8 @@ func spawn_enemy() -> void:
 	var enemy_node := enemy_instance as Node2D
 	if enemy_node != null:
 		enemy_node.global_position = SPAWN_POS
+		if enemy_node.get("attack_auto_enabled") != null:
+			enemy_node.set("attack_auto_enabled", false)
 
 	current_enemy = enemy_node
 	_is_killing = false
@@ -62,6 +67,7 @@ func kill_enemy() -> void:
 		return
 
 	_is_killing = true
+	_attack_loop_active = false
 	if _sequence_tween != null:
 		_sequence_tween.kill()
 
@@ -80,11 +86,24 @@ func kill_enemy() -> void:
 	update_ui_state()
 
 
+func stagger_enemy() -> void:
+	if not is_instance_valid(current_enemy):
+		return
+	if _is_killing:
+		return
+
+	var visual := _get_visual_controller(current_enemy)
+	if visual != null and visual.has_method("apply_state"):
+		visual.call("apply_state", "stagger")
+
+
 func update_ui_state() -> void:
 	if _spawn_button != null:
 		_spawn_button.disabled = not can_spawn()
 	if _kill_button != null:
 		_kill_button.disabled = can_spawn()
+	if _stagger_button != null:
+		_stagger_button.disabled = can_spawn()
 
 
 func _run_sequence(enemy: Node2D) -> void:
@@ -95,22 +114,8 @@ func _run_sequence(enemy: Node2D) -> void:
 	if visual != null and visual.has_method("apply_state"):
 		visual.call("apply_state", "walk")
 
-	_sequence_tween = create_tween()
-	_sequence_tween.tween_property(enemy, "global_position", SPAWN_POS + MOVE_OFFSET, MOVE_DURATION)
-	await _sequence_tween.finished
-
-	if _should_stop_sequence(enemy):
-		return
-
-	if visual != null and visual.has_method("apply_state"):
-		visual.call("apply_state", "stagger")
-
-	await get_tree().create_timer(1.0).timeout
-	if _should_stop_sequence(enemy):
-		return
-
-	if visual != null and visual.has_method("apply_state"):
-		visual.call("apply_state", "attack")
+	_start_movement_loop(enemy)
+	_start_attack_loop(enemy)
 
 
 func _should_stop_sequence(enemy: Node2D) -> bool:
@@ -121,7 +126,58 @@ func _should_stop_sequence(enemy: Node2D) -> bool:
 	return current_enemy != enemy
 
 
+func _start_movement_loop(enemy: Node2D) -> void:
+	var sprite := _get_enemy_sprite(enemy)
+	if sprite != null:
+		sprite.flip_h = false
+
+	_sequence_tween = create_tween()
+	_sequence_tween.set_loops()
+	_sequence_tween.tween_property(enemy, "global_position", SPAWN_POS - MOVE_OFFSET, MOVE_DURATION)
+	_sequence_tween.tween_callback(func() -> void:
+		if sprite != null:
+			sprite.flip_h = true
+	)
+	_sequence_tween.tween_property(enemy, "global_position", SPAWN_POS + MOVE_OFFSET, MOVE_DURATION)
+	_sequence_tween.tween_callback(func() -> void:
+		if sprite != null:
+			sprite.flip_h = false
+	)
+
+
+func _start_attack_loop(enemy: Node2D) -> void:
+	_attack_loop_active = true
+	var attack_cd := _get_enemy_attack_cd(enemy)
+	if attack_cd <= 0.0:
+		attack_cd = 1.0
+
+	while _attack_loop_active:
+		await get_tree().create_timer(attack_cd).timeout
+		if _should_stop_sequence(enemy):
+			return
+
+		var visual := _get_visual_controller(enemy)
+		if visual != null and visual.has_method("apply_state"):
+			visual.call("apply_state", "attack")
+		if enemy.has_method("trigger_attack"):
+			enemy.call("trigger_attack")
+
+
 func _get_visual_controller(enemy: Node2D) -> Node:
 	if enemy == null:
 		return null
 	return enemy.get_node_or_null("Visual/Enemy01Visual")
+
+
+func _get_enemy_sprite(enemy: Node2D) -> Sprite2D:
+	if enemy == null:
+		return null
+	return enemy.get_node_or_null("Visual/Enemy01Visual/WingsSprite") as Sprite2D
+
+
+func _get_enemy_attack_cd(enemy: Node2D) -> float:
+	if enemy == null:
+		return 0.0
+	if enemy.get("attack_cd") == null:
+		return 0.0
+	return float(enemy.get("attack_cd"))

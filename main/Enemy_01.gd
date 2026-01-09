@@ -5,6 +5,7 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 @export var attack_cd: float = 3.0
+@export var attack_auto_enabled: bool = true
 @export var swing_duration: float = 1.0
 @export var start_angle_offset: float = -PI / 3.0
 @export var hitbox_radius: float = 50.0
@@ -58,6 +59,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _update_attack(delta: float) -> void:
+	if not attack_auto_enabled:
+		return
 	if _swing_active:
 		_swing_elapsed += delta
 		_update_attack_hitbox_position()
@@ -69,6 +72,12 @@ func _update_attack(delta: float) -> void:
 	_attack_cd_left = maxf(_attack_cd_left - delta, 0.0)
 	if _attack_cd_left <= 0.0:
 		_start_swing()
+
+
+func trigger_attack() -> void:
+	if _swing_active:
+		return
+	_start_swing()
 
 
 func _start_swing() -> void:

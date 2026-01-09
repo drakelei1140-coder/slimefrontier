@@ -13,6 +13,7 @@ class_name DebugPanel
 @onready var ui_debug_button_stagger: Button = $slimeStagger
 @onready var ui_debug_button_spawn_enemy: Button = $BtnSpawnEnemy
 @onready var ui_debug_button_kill_enemy: Button = $BtnKillEnemy
+@onready var ui_debug_button_stagger_enemy: Button = $BtnStaggerEnemy
 
 
 func _ready() -> void:
@@ -41,9 +42,16 @@ func _ready() -> void:
 		ui_debug_button_spawn_enemy.pressed.connect(_on_ui_debug_spawn_enemy_pressed)
 	if not ui_debug_button_kill_enemy.pressed.is_connected(_on_ui_debug_kill_enemy_pressed):
 		ui_debug_button_kill_enemy.pressed.connect(_on_ui_debug_kill_enemy_pressed)
+	if not ui_debug_button_stagger_enemy.pressed.is_connected(_on_ui_debug_stagger_enemy_pressed):
+		ui_debug_button_stagger_enemy.pressed.connect(_on_ui_debug_stagger_enemy_pressed)
 
 	if enemy01_test_director.has_method("register_debug_buttons"):
-		enemy01_test_director.call("register_debug_buttons", ui_debug_button_spawn_enemy, ui_debug_button_kill_enemy)
+		enemy01_test_director.call(
+			"register_debug_buttons",
+			ui_debug_button_spawn_enemy,
+			ui_debug_button_kill_enemy,
+			ui_debug_button_stagger_enemy
+		)
 
 
 func _process(_delta: float) -> void:
@@ -145,3 +153,10 @@ func _on_ui_debug_kill_enemy_pressed() -> void:
 		return
 	if enemy01_test_director.has_method("kill_enemy"):
 		enemy01_test_director.call("kill_enemy")
+
+
+func _on_ui_debug_stagger_enemy_pressed() -> void:
+	if enemy01_test_director == null or not is_instance_valid(enemy01_test_director):
+		return
+	if enemy01_test_director.has_method("stagger_enemy"):
+		enemy01_test_director.call("stagger_enemy")
