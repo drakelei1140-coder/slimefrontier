@@ -4,11 +4,11 @@ class_name Enemy01TestDirector
 @export var enemy_scene: PackedScene
 @export var enemy_parent: NodePath
 
-const SPAWN_POS := Vector2(256.0, 0.0)
+const SPAWN_POS := Vector2(0.0, 0.0)
 const MOVE_OFFSET := Vector2(500.0, 0.0)
 const MOVE_DURATION := 1.5
-const SPAWN_RIGHT := SPAWN_POS + MOVE_OFFSET
-const TARGET_LEFT := SPAWN_POS
+const SPAWN_RIGHT := Vector2(256,0)
+const TARGET_LEFT := SPAWN_RIGHT - MOVE_OFFSET
 
 var current_enemy: Node2D = null
 var _spawn_button: Button = null
@@ -185,9 +185,7 @@ func _on_reach_left(enemy: Node2D) -> void:
 		_sequence_tween.kill()
 		_sequence_tween = null
 
-	var visual := _get_visual_controller(enemy)
-	if visual != null and visual.has_method("apply_state"):
-		visual.call("apply_state", "stagger")
+
 
 	var timer := get_tree().create_timer(1.0)
 	timer.timeout.connect(func() -> void:
