@@ -126,10 +126,6 @@ func _should_stop_sequence(enemy: Node2D) -> bool:
 
 
 func _start_movement_loop(enemy: Node2D) -> void:
-	var sprite := _get_enemy_sprite(enemy)
-	if sprite != null:
-		sprite.flip_h = true
-
 	_sequence_tween = create_tween()
 	_sequence_tween.set_loops()
 	var distance_to_right := enemy.global_position.distance_to(SPAWN_RIGHT)
@@ -139,25 +135,13 @@ func _start_movement_loop(enemy: Node2D) -> void:
 	if go_left_first:
 		_sequence_tween.tween_property(enemy, "global_position", TARGET_LEFT, MOVE_DURATION)
 		_sequence_tween.tween_callback(func() -> void:
-			if sprite != null:
-				sprite.flip_h = false
 			_on_reach_left(enemy)
 		)
 		_sequence_tween.tween_property(enemy, "global_position", SPAWN_RIGHT, MOVE_DURATION)
-		_sequence_tween.tween_callback(func() -> void:
-			if sprite != null:
-				sprite.flip_h = true
-		)
 	else:
 		_sequence_tween.tween_property(enemy, "global_position", SPAWN_RIGHT, MOVE_DURATION)
-		_sequence_tween.tween_callback(func() -> void:
-			if sprite != null:
-				sprite.flip_h = true
-		)
 		_sequence_tween.tween_property(enemy, "global_position", TARGET_LEFT, MOVE_DURATION)
 		_sequence_tween.tween_callback(func() -> void:
-			if sprite != null:
-				sprite.flip_h = false
 			_on_reach_left(enemy)
 		)
 
@@ -166,12 +150,6 @@ func _get_visual_controller(enemy: Node2D) -> Node:
 	if enemy == null:
 		return null
 	return enemy.get_node_or_null("Visual/Enemy01Visual")
-
-
-func _get_enemy_sprite(enemy: Node2D) -> Sprite2D:
-	if enemy == null:
-		return null
-	return enemy.get_node_or_null("Visual/Enemy01Visual/WingsSprite") as Sprite2D
 
 
 func _on_reach_left(enemy: Node2D) -> void:

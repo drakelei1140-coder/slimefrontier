@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+const TARGET_REFRESH_INTERVAL = 0.5
 
 @export var attack_cd: float = 3.0
 @export var attack_auto_enabled: bool = true
@@ -17,11 +18,15 @@ var _attack_cd_left: float = 0.0
 var _swing_active: bool = false
 var _swing_elapsed: float = 0.0
 var _swing_start_angle: float = 0.0
+var _target_refresh_left: float = 0.0
+var _target: Node2D = null
+var _sprite: Sprite2D = null
 
 @onready var attack_hitbox:OneShotDamageDealer = $AttackHitbox
 @onready var visual_controller: EnemyVisualController = $Visual/Enemy01Visual as EnemyVisualController
 
 func _ready() -> void:
+	_sprite = get_node_or_null("Visual/Enemy01Visual/WingsSprite") as Sprite2D
 	attack_hitbox.set_active(false)
 	attack_hitbox.damage_amount = attack_damage
 	attack_hitbox.stagger_amount = attack_stagger
@@ -40,6 +45,7 @@ func _on_role_hurtbox_hit(damage: int, stagger: float, _source: Node) -> void:
 
 func _physics_process(delta: float) -> void:
 	_update_attack(delta)
+	_update_facing(delta)
 
 	# Add the gravity.
 	if not is_on_floor():
@@ -58,6 +64,28 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+func _update_facing(delta: float) -> void:
+	if _sprite == null:
+		return
+
+	_target_refresh_left -= delta
+	if _target_refresh_left <= 0.0 or not is_instance_valid(_target):
+		_target = _acquire_target()
+		_target_refresh_left = TARGET_REFRESH_INTERVAL
+
+	if _target == null:
+		return
+
+	_sprite.flip_h = global_position.x > _target.global_position.x
+
+func _acquire_target() -> Node2D:
+	var targets := get_tree().get_nodes_in_group("active_player")
+	for target in targets:
+		var node2d := target as Node2D
+		if node2d != null and is_instance_valid(node2d):
+			return node2d
+	return null
 
 func _update_attack(delta: float) -> void:
 	if not attack_auto_enabled:
