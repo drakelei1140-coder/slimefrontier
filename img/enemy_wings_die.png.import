@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbake4w7o8cq8"
-path="res://.godot/imported/slime_wings_512x512_transparent.png-027426664db429e9228d8c93ef5d93e7.ctex"
+uid="uid://dk7wt0ulk7hha"
+path="res://.godot/imported/enemy_wings_die.png-ea7af79a01ddcf1fd65a1d886072a7ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/slime_wings_512x512_transparent.png"
-dest_files=["res://.godot/imported/slime_wings_512x512_transparent.png-027426664db429e9228d8c93ef5d93e7.ctex"]
+source_file="res://img/enemy_wings_die.png"
+dest_files=["res://.godot/imported/enemy_wings_die.png-ea7af79a01ddcf1fd65a1d886072a7ea.ctex"]
 
 [params]
 
