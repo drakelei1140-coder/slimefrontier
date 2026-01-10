@@ -12,6 +12,8 @@ const TARGET_REFRESH_INTERVAL = 0.5
 @export var attack_damage: int = 2
 @export var attack_stagger: float = 0.15
 @export var attack_target_group: StringName = &"player"
+@onready var hitbox_sprite: Sprite2D = $AttackHitbox/HitboxSprite
+@export var hitbox_sprite_spin_rps: float = 3.0 # revolutions per second（每秒旋转圈数）
 
 # ✅ 新增：敌人硬直持续时间（和角色一样默认 0.15s）
 @export var stagger_duration: float = 0.15
@@ -166,13 +168,18 @@ func _end_swing() -> void:
 	_attack_cd_left = attack_cd
 	attack_hitbox.set_active(false)
 	attack_hitbox.position = Vector2.ZERO
+	if is_instance_valid(hitbox_sprite):
+		hitbox_sprite.rotation = 0.0
+
 
 
 func _update_attack_hitbox_position() -> void:
 	var duration := maxf(swing_duration, 0.001)
 	var angle := _swing_start_angle + (_swing_elapsed / duration) * TAU
 	attack_hitbox.position = Vector2(cos(angle), sin(angle)) * hitbox_radius
-
+	# ✅ HitboxSprite 自身顺时针自转：每秒 hitbox_sprite_spin_rps 圈
+	if is_instance_valid(hitbox_sprite):
+		hitbox_sprite.rotation = _swing_elapsed * TAU * hitbox_sprite_spin_rps
 
 func _get_direction_to_target() -> Vector2:
 	var targets := get_tree().get_nodes_in_group(attack_target_group)
