@@ -495,6 +495,7 @@ visible = false
 [node name="CombatHooks" type="Node" parent="."]
 
 [node name="ActorHpBar" parent="." instance=ExtResource("12_ms6vc")]
+visible = false
 position = Vector2(-48, -70.00001)
 scale = Vector2(0.195, 0.395)
 anchor_path = NodePath("../Visual/PureSlimeVisual/HpBarAnchor")

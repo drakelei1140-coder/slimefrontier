@@ -40,6 +40,7 @@ func _ready() -> void:
 
 func _enter_tree() -> void:
 	add_to_group("player")
+	add_to_group("active_player")
 
 func _on_role_hurtbox_hit(damage: int, stagger: float, _source: Node) -> void:
 	# 统一走 ActorBase 的入口（你已有）

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmfn4shrapibl"]
+[gd_scene load_steps=18 format=3 uid="uid://cmfn4shrapibl"]
 
 [ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
 [ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c34l1he2h2chx" path="res://main/weapons.tscn" id="8_v3ojx"]
 [ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/scripts/ui/HUD.gd" id="9_4u4fy"]
 [ext_resource type="PackedScene" uid="uid://bb1qcbw1x6uah" path="res://main/projectile_basic.tscn" id="9_v3ojx"]
+[ext_resource type="Script" uid="uid://dwp0fkowcwlpw" path="res://main/Enemy01TestDirector.gd" id="10_0i1y6"]
 [ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/HPBar_Under.png" id="10_f7m14"]
 [ext_resource type="Texture2D" uid="uid://gi8w253bpiht" path="res://img/HPBar_Over.png" id="11_yyuar"]
 [ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/HPBar_Progress.png" id="12_0coyo"]
@@ -42,6 +43,11 @@ game_player_packed_scene = ExtResource("3_v3ojx")
 [node name="World" type="Node2D" parent="."]
 script = ExtResource("2_4u4fy")
 
+[node name="Enemy01TestDirector" type="Node" parent="World"]
+script = ExtResource("10_0i1y6")
+enemy_scene = ExtResource("5_j015t")
+enemy_parent = NodePath("../../Entities/Enemies")
+
 [node name="Props" type="Node2D" parent="World"]
 
 [node name="Decoration" type="Node2D" parent="World/Props"]
@@ -56,8 +62,6 @@ script = ExtResource("2_4u4fy")
 
 [node name="Enemies" type="Node2D" parent="Entities"]
 script = ExtResource("5_v3ojx")
-
-[node name="Enemy_01" parent="Entities/Enemies" instance=ExtResource("5_j015t")]
 
 [node name="Weapons" parent="Entities" instance=ExtResource("8_v3ojx")]
 
@@ -79,9 +83,9 @@ script = ExtResource("9_4u4fy")
 [node name="HP_ProgressBar" type="ProgressBar" parent="UI/HUD"]
 layout_mode = 0
 offset_left = 12.0
-offset_top = 48.0
+offset_top = 12.0
 offset_right = 112.0
-offset_bottom = 64.0
+offset_bottom = 28.0
 theme_override_font_sizes/font_size = 8
 theme_override_styles/background = SubResource("StyleBoxFlat_f7m14")
 theme_override_styles/fill = SubResource("StyleBoxFlat_yyuar")
@@ -103,6 +107,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HPBar" type="TextureProgressBar" parent="UI/HUD"]
+visible = false
 clip_contents = true
 layout_direction = 2
 layout_mode = 0
@@ -157,6 +162,7 @@ offset_bottom = 300.0
 grow_horizontal = 0
 script = ExtResource("12_v3ojx")
 ui_debug_game_node_path = NodePath("../../..")
+enemy01_test_director_path = NodePath("../../../World/Enemy01TestDirector")
 
 [node name="TextEdit" type="TextEdit" parent="UI/DebugRoot/DebugPanel"]
 layout_mode = 1
@@ -201,7 +207,7 @@ offset_left = -85.0
 offset_top = 11.0
 offset_right = 5.0
 offset_bottom = 47.0
-text = "怪物出生"
+text = "怪物重生"
 
 [node name="BtnKillEnemy" type="Button" parent="UI/DebugRoot/DebugPanel"]
 layout_mode = 0
@@ -210,5 +216,13 @@ offset_top = 52.0
 offset_right = 5.0
 offset_bottom = 88.0
 text = "怪物死亡"
+
+[node name="BtnStaggerEnemy" type="Button" parent="UI/DebugRoot/DebugPanel"]
+layout_mode = 0
+offset_left = -85.0
+offset_top = 93.0
+offset_right = 5.0
+offset_bottom = 129.0
+text = "怪物硬直"
 
 [node name="Camera2D" type="Camera2D" parent="."]
