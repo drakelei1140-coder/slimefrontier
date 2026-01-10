@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://b0lt2mqptlvq7"]
+[gd_scene load_steps=20 format=3 uid="uid://b0lt2mqptlvq7"]
 
 [ext_resource type="Script" uid="uid://cf8nlyr8da1xk" path="res://main/Enemy_01.gd" id="1_igf4t"]
 [ext_resource type="Script" uid="uid://b64plejtjgtel" path="res://main/scripts/actors/combat/hurtbox_ememy.gd" id="2_capf1"]
+[ext_resource type="PackedScene" uid="uid://clbqogmu0dniu" path="res://main/scenes/projectiles/enemy/enemy_wings_bullet.tscn" id="2_kmvm2"]
 [ext_resource type="Script" uid="uid://bfc3elreo3hkw" path="res://main/scripts/actors/combat/OneShotDamageDealer.gd" id="3_gowdl"]
 [ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_p0vte"]
 [ext_resource type="Texture2D" uid="uid://bwpem7wf24s08" path="res://img/enemy_wings_attack.png" id="4_48838"]
@@ -232,6 +233,9 @@ position = Vector2(256, 0)
 script = ExtResource("1_igf4t")
 hitbox_radius = 55.0
 hitbox_sprite_spin_rps = 2.0
+enemy_projectile_scene = ExtResource("2_kmvm2")
+enemy_projectile_move_speed = 400.0
+enemy_projectile_max_range = 400.0
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
@@ -316,3 +320,6 @@ texture = ExtResource("7_1bcvn")
 libraries = {
 &"": SubResource("AnimationLibrary_kmvm2")
 }
+
+[node name="ProjectileAnchor" type="Marker2D" parent="."]
+position = Vector2(-49, 0)

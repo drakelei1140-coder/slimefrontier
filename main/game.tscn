@@ -225,4 +225,14 @@ offset_right = 5.0
 offset_bottom = 129.0
 text = "怪物硬直"
 
+[node name="BtnShootEnemy" type="Button" parent="UI/DebugRoot/DebugPanel"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 135.0
+offset_right = 3.0
+offset_bottom = 171.0
+text = "怪物射击"
+
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="pressed" from="UI/DebugRoot/DebugPanel/BtnShootEnemy" to="World/Enemy01TestDirector" method="_on_btn_shoot_enemy_pressed"]

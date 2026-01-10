@@ -7,13 +7,15 @@ class_name Enemy01TestDirector
 const SPAWN_POS := Vector2(0.0, 0.0)
 const MOVE_OFFSET := Vector2(500.0, 0.0)
 const MOVE_DURATION := 1.5
-const SPAWN_RIGHT := Vector2(256,0)
+const SPAWN_RIGHT := Vector2(256, 0)
 const TARGET_LEFT := SPAWN_RIGHT - MOVE_OFFSET
 
 var current_enemy: Node2D = null
 var _spawn_button: Button = null
 var _kill_button: Button = null
 var _stagger_button: Button = null
+var _shoot_button: Button = null
+
 var _is_killing: bool = false
 var _sequence_tween: Tween = null
 var _first_arrival_handled: bool = false
@@ -27,6 +29,12 @@ func register_debug_buttons(spawn_button: Button, kill_button: Button, stagger_b
 	_spawn_button = spawn_button
 	_kill_button = kill_button
 	_stagger_button = stagger_button
+	update_ui_state()
+
+
+# ✅ 可选：如果你也想把“射击按钮”走注册方式，就用这个
+func register_shoot_button(shoot_button: Button) -> void:
+	_shoot_button = shoot_button
 	update_ui_state()
 
 
@@ -103,13 +111,28 @@ func stagger_enemy() -> void:
 		visual.call("apply_state", "stagger")
 
 
+# ✅ 新增：给按钮调用的“射击一次”
+func shoot_enemy() -> void:
+	if not is_instance_valid(current_enemy):
+		return
+	if _is_killing:
+		return
+
+	if current_enemy.has_method("trigger_projectile_attack"):
+		current_enemy.call("trigger_projectile_attack")
+
+
 func update_ui_state() -> void:
+	var has_enemy := not can_spawn()
+
 	if _spawn_button != null:
-		_spawn_button.disabled = not can_spawn()
+		_spawn_button.disabled = has_enemy
 	if _kill_button != null:
-		_kill_button.disabled = can_spawn()
+		_kill_button.disabled = not has_enemy
 	if _stagger_button != null:
-		_stagger_button.disabled = can_spawn()
+		_stagger_button.disabled = not has_enemy
+	if _shoot_button != null:
+		_shoot_button.disabled = not has_enemy
 
 
 func _run_sequence(enemy: Node2D) -> void:
@@ -134,6 +157,7 @@ func _should_stop_sequence(enemy: Node2D) -> bool:
 func _start_movement_loop(enemy: Node2D) -> void:
 	_sequence_tween = create_tween()
 	_sequence_tween.set_loops()
+
 	var distance_to_right := enemy.global_position.distance_to(SPAWN_RIGHT)
 	var distance_to_left := enemy.global_position.distance_to(TARGET_LEFT)
 	var go_left_first := distance_to_right <= distance_to_left
@@ -169,7 +193,7 @@ func _on_reach_left(enemy: Node2D) -> void:
 		_sequence_tween.kill()
 		_sequence_tween = null
 
-	var timer := get_tree().create_timer(1.0)
+	var timer := get_tree().create_timer(0.0)
 	timer.timeout.connect(func() -> void:
 		if _should_stop_sequence(enemy):
 			return
@@ -177,3 +201,11 @@ func _on_reach_left(enemy: Node2D) -> void:
 			enemy.call("trigger_attack")
 		_start_movement_loop(enemy)
 	)
+
+
+# =========================
+# UI Button Signal (BtnShootEnemy)
+# =========================
+func _on_btn_shoot_enemy_pressed() -> void:
+	# ✅ 直接复用 shoot_enemy()，避免重复逻辑
+	shoot_enemy()
