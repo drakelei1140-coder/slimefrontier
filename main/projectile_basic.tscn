@@ -1,10 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://bb1qcbw1x6uah"]
 
-[ext_resource type="Script" uid="uid://bbntw3hcehnai" path="res://main/scripts/projectiles/ProjectileBase.gd" id="1_n0o6r"]
+[ext_resource type="Script" uid="uid://bbntw3hcehnai" path="res://main/scripts/projectiles/ProjectileDirector.gd" id="1_n0o6r"]
 [ext_resource type="Script" uid="uid://dbghl6d05xc72" path="res://main/scripts/actors/combat/Hitbox.gd" id="2_fr58o"]
 
-[node name="projectile_basic" type="Area2D"]
+[node name="projectile_basic" type="Node2D" groups=["projectile_director"]]
 script = ExtResource("1_n0o6r")
+
+[node name="player" type="Node2D" parent="."]
+
+[node name="weapon" type="Node2D" parent="player"]
+
+[node name="skill" type="Node2D" parent="player"]
+
+[node name="enemy" type="Node2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 8

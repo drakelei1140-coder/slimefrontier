@@ -21,6 +21,10 @@ boot_splash/autoload_on_startup=true
 InputConfig="*res://scripts/systems/input_config.gd"
 character_data_manager="*res://main/scripts/data/character_data_manager.gd"
 
+[global_group]
+
+projectile_director=""
+
 [input]
 
 move_left={
