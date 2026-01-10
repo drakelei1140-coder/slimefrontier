@@ -116,8 +116,8 @@ script = ExtResource("1_2p7jx")
 texture = ExtResource("1_iixie")
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 128
-collision_mask = 8
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("3_sg504")
 hitbox_team = 1
 
