@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcxrejbnpsevn"
-path="res://.godot/imported/pureslime_normal - 副本.png-c6236636f2a27b8ee065675ea8c8ee7c.ctex"
+uid="uid://dt508bt02qo2r"
+path="res://.godot/imported/slime_ghost_Tail.png-d1f2f741286b7490768368b8e00b5241.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/pureslime_normal - 副本.png"
-dest_files=["res://.godot/imported/pureslime_normal - 副本.png-c6236636f2a27b8ee065675ea8c8ee7c.ctex"]
+source_file="res://img/player/slime_ghost_Tail.png"
+dest_files=["res://.godot/imported/slime_ghost_Tail.png-d1f2f741286b7490768368b8e00b5241.ctex"]
 
 [params]
 

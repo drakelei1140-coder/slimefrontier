@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f4wpqh5vbsrq"
-path="res://.godot/imported/slime_ghost_tears.png-b562324e491d17f97751ee952936ea8d.ctex"
+uid="uid://0c071yis642a"
+path="res://.godot/imported/pureslime_die.png-da58525a766470f452a70021004bf6b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/slime_ghost_tears.png"
-dest_files=["res://.godot/imported/slime_ghost_tears.png-b562324e491d17f97751ee952936ea8d.ctex"]
+source_file="res://img/player/pureslime_die.png"
+dest_files=["res://.godot/imported/pureslime_die.png-da58525a766470f452a70021004bf6b6.ctex"]
 
 [params]
 

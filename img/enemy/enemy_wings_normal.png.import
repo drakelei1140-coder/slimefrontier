@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://02qn7w1ap00i"
-path="res://.godot/imported/HPBar_Under.png-c8c08f96de520fdb44720a707bd16060.ctex"
+uid="uid://bbake4w7o8cq8"
+path="res://.godot/imported/enemy_wings_normal.png-15c7e5ee0d31c5bde127151bf0cee774.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/HPBar_Under.png"
-dest_files=["res://.godot/imported/HPBar_Under.png-c8c08f96de520fdb44720a707bd16060.ctex"]
+source_file="res://img/enemy/enemy_wings_normal.png"
+dest_files=["res://.godot/imported/enemy_wings_normal.png-15c7e5ee0d31c5bde127151bf0cee774.ctex"]
 
 [params]
 

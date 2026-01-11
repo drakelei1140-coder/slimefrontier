@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1m1qtdnp7wix"
-path="res://.godot/imported/HPBar_Progress.png-41d2a4b4de3bd6d5660b7ced86970e1d.ctex"
+uid="uid://dp6aliwccm875"
+path="res://.godot/imported/enemy_wings_stagger.png-9de08103ad42a55703d73062f1482844.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/HPBar_Progress.png"
-dest_files=["res://.godot/imported/HPBar_Progress.png-41d2a4b4de3bd6d5660b7ced86970e1d.ctex"]
+source_file="res://img/enemy/enemy_wings_stagger.png"
+dest_files=["res://.godot/imported/enemy_wings_stagger.png-9de08103ad42a55703d73062f1482844.ctex"]
 
 [params]
 

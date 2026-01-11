@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw1oq617byto4"
-path="res://.godot/imported/pureslime_normal.png-255ac7a921155e2063e0b868f0f20fca.ctex"
+uid="uid://1m1qtdnp7wix"
+path="res://.godot/imported/HPBar_Progress.png-89feb058ae6a69aa713f3c9af8eaa6b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/pureslime_normal.png"
-dest_files=["res://.godot/imported/pureslime_normal.png-255ac7a921155e2063e0b868f0f20fca.ctex"]
+source_file="res://img/system/HPBar_Progress.png"
+dest_files=["res://.godot/imported/HPBar_Progress.png-89feb058ae6a69aa713f3c9af8eaa6b1.ctex"]
 
 [params]
 

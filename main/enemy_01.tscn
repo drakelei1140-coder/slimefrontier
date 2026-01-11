@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://clbqogmu0dniu" path="res://main/scenes/projectiles/enemy/enemy_wings_bullet.tscn" id="2_kmvm2"]
 [ext_resource type="Script" uid="uid://bfc3elreo3hkw" path="res://main/scripts/actors/combat/OneShotDamageDealer.gd" id="3_gowdl"]
 [ext_resource type="Script" uid="uid://cxknwiluosf3g" path="res://main/CharacterStateMachine.gd" id="3_p0vte"]
-[ext_resource type="Texture2D" uid="uid://bwpem7wf24s08" path="res://img/enemy_wings_attack.png" id="4_48838"]
+[ext_resource type="Texture2D" uid="uid://bwpem7wf24s08" path="res://img/projectile/enemy/enemy_wings_attack.png" id="4_48838"]
 [ext_resource type="Script" uid="uid://1lxy25lewi3" path="res://main/scripts/visual/EnemyVisualController.gd" id="5_1bcvn"]
 [ext_resource type="Script" uid="uid://c1huwhdo8fj0c" path="res://main/scripts/actors/combat/ContactDamageDealer.gd" id="6_3orhq"]
-[ext_resource type="Texture2D" uid="uid://bbake4w7o8cq8" path="res://img/enemy_wings_normal.png" id="7_1bcvn"]
-[ext_resource type="Texture2D" uid="uid://dk7wt0ulk7hha" path="res://img/enemy_wings_die.png" id="8_2tegm"]
-[ext_resource type="Texture2D" uid="uid://dp6aliwccm875" path="res://img/enemy_wings_stagger.png" id="8_fshp3"]
+[ext_resource type="Texture2D" uid="uid://bbake4w7o8cq8" path="res://img/enemy/enemy_wings_normal.png" id="7_1bcvn"]
+[ext_resource type="Texture2D" uid="uid://dk7wt0ulk7hha" path="res://img/enemy/enemy_wings_die.png" id="8_2tegm"]
+[ext_resource type="Texture2D" uid="uid://dp6aliwccm875" path="res://img/enemy/enemy_wings_stagger.png" id="8_fshp3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p0vte"]
 radius = 30.0

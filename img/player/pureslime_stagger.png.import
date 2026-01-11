@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp6aliwccm875"
-path="res://.godot/imported/enemy_wings_stagger.png-2357511529db8a89044028ea869941c0.ctex"
+uid="uid://40o72wmwdmvr"
+path="res://.godot/imported/pureslime_stagger.png-a5996e80652eb4e95a17870ffc7d7702.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/enemy_wings_stagger.png"
-dest_files=["res://.godot/imported/enemy_wings_stagger.png-2357511529db8a89044028ea869941c0.ctex"]
+source_file="res://img/player/pureslime_stagger.png"
+dest_files=["res://.godot/imported/pureslime_stagger.png-a5996e80652eb4e95a17870ffc7d7702.ctex"]
 
 [params]
 

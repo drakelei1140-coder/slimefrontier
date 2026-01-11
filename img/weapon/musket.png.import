@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwpem7wf24s08"
-path="res://.godot/imported/enemy_wings_attack.png-72ae2816a01f6a9a7ca40cf0beb6807c.ctex"
+uid="uid://dkpb5frs52e5d"
+path="res://.godot/imported/musket.png-66eed0f2d5c8b4e5344d4321b95eef84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/enemy_wings_attack.png"
-dest_files=["res://.godot/imported/enemy_wings_attack.png-72ae2816a01f6a9a7ca40cf0beb6807c.ctex"]
+source_file="res://img/weapon/musket.png"
+dest_files=["res://.godot/imported/musket.png-66eed0f2d5c8b4e5344d4321b95eef84.ctex"]
 
 [params]
 

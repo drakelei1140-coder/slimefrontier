@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbew55ih8w5ab"
-path="res://.godot/imported/enemy_wings_bullet.png-2301ce692e129a57cdd629ef5e244c1b.ctex"
+path="res://.godot/imported/enemy_wings_bullet.png-e1a20500ce59270c2a8927da6c29b209.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/enemy_wings_bullet.png"
-dest_files=["res://.godot/imported/enemy_wings_bullet.png-2301ce692e129a57cdd629ef5e244c1b.ctex"]
+source_file="res://img/projectile/enemy/enemy_wings_bullet.png"
+dest_files=["res://.godot/imported/enemy_wings_bullet.png-e1a20500ce59270c2a8927da6c29b209.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt508bt02qo2r"
-path="res://.godot/imported/slime_ghost_Tail.png-add1925d4a32e653c535a92948b62277.ctex"
+uid="uid://02qn7w1ap00i"
+path="res://.godot/imported/HPBar_Under.png-f0f3d46e4d4b079311c73ada2df5748e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/slime_ghost_Tail.png"
-dest_files=["res://.godot/imported/slime_ghost_Tail.png-add1925d4a32e653c535a92948b62277.ctex"]
+source_file="res://img/system/HPBar_Under.png"
+dest_files=["res://.godot/imported/HPBar_Under.png-f0f3d46e4d4b079311c73ada2df5748e.ctex"]
 
 [params]
 

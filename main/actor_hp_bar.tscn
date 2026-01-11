@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8rwlonx3dd0x"]
 
-[ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/HPBar_Under.png" id="1_6qqnu"]
+[ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/system/HPBar_Under.png" id="1_6qqnu"]
 [ext_resource type="Script" uid="uid://b0mfpm4w2ndyk" path="res://main/scripts/actors/ActorHpBar.gd" id="1_iikgx"]
-[ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/HPBar_Progress.png" id="2_iikgx"]
+[ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/system/HPBar_Progress.png" id="2_iikgx"]
 
 [node name="ActorHpBar" type="Node2D"]
 script = ExtResource("1_iikgx")

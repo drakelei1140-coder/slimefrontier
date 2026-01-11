@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://40o72wmwdmvr"
-path="res://.godot/imported/pureslime_stagger.png-dd1985af7d0c4a8f30f7722a25c9fbe1.ctex"
+uid="uid://gi8w253bpiht"
+path="res://.godot/imported/HPBar_Over.png-b7258a50b42e85c7682bd6259f3f9d98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/pureslime_stagger.png"
-dest_files=["res://.godot/imported/pureslime_stagger.png-dd1985af7d0c4a8f30f7722a25c9fbe1.ctex"]
+source_file="res://img/system/HPBar_Over.png"
+dest_files=["res://.godot/imported/HPBar_Over.png-b7258a50b42e85c7682bd6259f3f9d98.ctex"]
 
 [params]
 

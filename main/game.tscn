@@ -10,9 +10,9 @@
 [ext_resource type="Script" uid="uid://c5816rp73wbu3" path="res://main/scripts/ui/HUD.gd" id="9_4u4fy"]
 [ext_resource type="PackedScene" uid="uid://bb1qcbw1x6uah" path="res://main/projectile_basic.tscn" id="9_v3ojx"]
 [ext_resource type="Script" uid="uid://dwp0fkowcwlpw" path="res://main/Enemy01TestDirector.gd" id="10_0i1y6"]
-[ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/HPBar_Under.png" id="10_f7m14"]
-[ext_resource type="Texture2D" uid="uid://gi8w253bpiht" path="res://img/HPBar_Over.png" id="11_yyuar"]
-[ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/HPBar_Progress.png" id="12_0coyo"]
+[ext_resource type="Texture2D" uid="uid://02qn7w1ap00i" path="res://img/system/HPBar_Under.png" id="10_f7m14"]
+[ext_resource type="Texture2D" uid="uid://gi8w253bpiht" path="res://img/system/HPBar_Over.png" id="11_yyuar"]
+[ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/system/HPBar_Progress.png" id="12_0coyo"]
 [ext_resource type="Script" uid="uid://doqy6mxgnxlrg" path="res://main/scripts/ui/DebugPanel.gd" id="12_v3ojx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7m14"]

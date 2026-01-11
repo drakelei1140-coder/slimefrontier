@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbake4w7o8cq8"
-path="res://.godot/imported/enemy_wings_normal.png-addcf5316c017cdbaa271398f723822b.ctex"
+uid="uid://dcxrejbnpsevn"
+path="res://.godot/imported/pureslime_normal - 副本.png-669f3d179dcfe31ad75c578e30251393.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/enemy_wings_normal.png"
-dest_files=["res://.godot/imported/enemy_wings_normal.png-addcf5316c017cdbaa271398f723822b.ctex"]
+source_file="res://img/player/pureslime_normal - 副本.png"
+dest_files=["res://.godot/imported/pureslime_normal - 副本.png-669f3d179dcfe31ad75c578e30251393.ctex"]
 
 [params]
 

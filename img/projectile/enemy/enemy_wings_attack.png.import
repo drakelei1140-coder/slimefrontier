@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gi8w253bpiht"
-path="res://.godot/imported/HPBar_Over.png-de29be0de0c3635042d358a22559b0c6.ctex"
+uid="uid://bwpem7wf24s08"
+path="res://.godot/imported/enemy_wings_attack.png-4dc5e6c369058584c2e8d70088e296c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/HPBar_Over.png"
-dest_files=["res://.godot/imported/HPBar_Over.png-de29be0de0c3635042d358a22559b0c6.ctex"]
+source_file="res://img/projectile/enemy/enemy_wings_attack.png"
+dest_files=["res://.godot/imported/enemy_wings_attack.png-4dc5e6c369058584c2e8d70088e296c3.ctex"]
 
 [params]
 
