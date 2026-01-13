@@ -95,8 +95,8 @@ func _trigger_explode() -> void:
 
 	# 关闭判定，防止爆炸动画期间重复命中
 	if damage_area != null:
-		damage_area.monitoring = false
-		damage_area.monitorable = false
+		damage_area.set_deferred("monitoring", false)
+		damage_area.set_deferred("monitorable", false)
 
 	# 播放 explode，播完销毁
 	if bullet_anim != null and bullet_anim.has_animation("explode"):
