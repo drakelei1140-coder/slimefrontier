@@ -1,0 +1,359 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpve00dcer873"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0coyo"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.49019608)
+
+[node name="Pages" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PauseMenuPage" type="Control" parent="Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Pages/PauseMenuPage"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_top = 220.0
+offset_right = 75.0
+offset_bottom = 382.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0coyo")
+
+[node name="VBox" type="VBoxContainer" parent="Pages/PauseMenuPage/Panel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Pages/PauseMenuPage/Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "暂停
+"
+
+[node name="BtnEquipment" type="Button" parent="Pages/PauseMenuPage/Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "装备"
+
+[node name="BtnOptions" type="Button" parent="Pages/PauseMenuPage/Panel/VBox"]
+layout_mode = 2
+text = "选项"
+
+[node name="BtnQuit" type="Button" parent="Pages/PauseMenuPage/Panel/VBox"]
+layout_mode = 2
+text = "退出游戏"
+
+[node name="EquipmentPage" type="Control" parent="Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxRoot" type="VBoxContainer" parent="Pages/EquipmentPage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bg" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TopBar" type="HBoxContainer" parent="Pages/EquipmentPage/VBoxRoot"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Pages/EquipmentPage/VBoxRoot/TopBar"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Pages/EquipmentPage/VBoxRoot/TopBar"]
+layout_mode = 2
+
+[node name="BtnClose" type="Button" parent="Pages/EquipmentPage/VBoxRoot/TopBar"]
+layout_mode = 2
+
+[node name="Body" type="HBoxContainer" parent="Pages/EquipmentPage/VBoxRoot"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LeftPanel" type="PanelContainer" parent="Pages/EquipmentPage/VBoxRoot/Body"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.28
+
+[node name="LeftVBox" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel"]
+layout_mode = 2
+
+[node name="EquippedWeaponsBlock" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox"]
+layout_mode = 2
+
+[node name="BlockTitle" type="Label" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock"]
+layout_mode = 2
+
+[node name="WeaponSlotsRow" type="HBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock"]
+layout_mode = 2
+
+[node name="WeaponSlot_1" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow"]
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow/WeaponSlot_1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow/WeaponSlot_1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Highlight" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow/WeaponSlot_1"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WeaponSlot_2" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow"]
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow/WeaponSlot_2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow/WeaponSlot_2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Highlight" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/EquippedWeaponsBlock/WeaponSlotsRow/WeaponSlot_2"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PluginsBlock" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox"]
+layout_mode = 2
+
+[node name="BlockTitle" type="Label" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock"]
+layout_mode = 2
+
+[node name="PluginSlotsRow" type="HBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock"]
+layout_mode = 2
+
+[node name="PluginSlot_1" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow"]
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Highlight" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_1"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PluginSlot_2" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow"]
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Highlight" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_2"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PluginSlot_3" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow"]
+layout_mode = 2
+
+[node name="Bg" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_3"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_3"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Highlight" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/LeftPanel/LeftVBox/PluginsBlock/PluginSlotsRow/PluginSlot_3"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MidPanel" type="PanelContainer" parent="Pages/EquipmentPage/VBoxRoot/Body"]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.44
+
+[node name="MidVBox" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel"]
+layout_mode = 2
+
+[node name="InventoryTabs" type="TabContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox"]
+layout_mode = 2
+current_tab = 0
+
+[node name="TabWeapons" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox/InventoryTabs"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="GridWeapons" type="GridContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox/InventoryTabs/TabWeapons"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 6
+
+[node name="TabConsumables" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox/InventoryTabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="GridConsumables" type="GridContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox/InventoryTabs/TabConsumables"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 6
+
+[node name="TabPlugins" type="Control" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox/InventoryTabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="GridPlugins" type="GridContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox/InventoryTabs/TabPlugins"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 6
+
+[node name="SortFilterBar" type="HBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/MidPanel/MidVBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="RightPanel" type="PanelContainer" parent="Pages/EquipmentPage/VBoxRoot/Body"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.28
+
+[node name="RightVBox" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel"]
+layout_mode = 2
+
+[node name="InfoPanel" type="PanelContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox"]
+layout_mode = 2
+
+[node name="InfoVBox" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox/InfoPanel"]
+layout_mode = 2
+
+[node name="BigIcon" type="TextureRect" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox/InfoPanel/InfoVBox"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox/InfoPanel/InfoVBox"]
+layout_mode = 2
+
+[node name="Desc" type="Label" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox/InfoPanel/InfoVBox"]
+layout_mode = 2
+
+[node name="StatsPanel" type="PanelContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox"]
+layout_mode = 2
+
+[node name="StatsVBox" type="VBoxContainer" parent="Pages/EquipmentPage/VBoxRoot/Body/RightPanel/RightVBox/StatsPanel"]
+layout_mode = 2
+
+[node name="ModalRoot" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -9.0
+offset_right = 1.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ContextMenu" type="PopupPanel" parent="ModalRoot"]
+
+[node name="VBox" type="VBoxContainer" parent="ModalRoot/ContextMenu"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="BtnReplace" type="Button" parent="ModalRoot/ContextMenu/VBox"]
+layout_mode = 2
+
+[node name="BtnUnequip" type="Button" parent="ModalRoot/ContextMenu/VBox"]
+layout_mode = 2
+
+[node name="ReplaceDialog" type="PopupPanel" parent="ModalRoot"]
+
+[node name="DialogVBox" type="VBoxContainer" parent="ModalRoot/ReplaceDialog"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="TitleRow" type="HBoxContainer" parent="ModalRoot/ReplaceDialog/DialogVBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="ModalRoot/ReplaceDialog/DialogVBox/TitleRow"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="ModalRoot/ReplaceDialog/DialogVBox/TitleRow"]
+layout_mode = 2
+
+[node name="BtnClose" type="Button" parent="ModalRoot/ReplaceDialog/DialogVBox/TitleRow"]
+layout_mode = 2
+
+[node name="CandidateGrid" type="GridContainer" parent="ModalRoot/ReplaceDialog/DialogVBox"]
+layout_mode = 2

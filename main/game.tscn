@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cmfn4shrapibl"]
+[gd_scene load_steps=19 format=3 uid="uid://cmfn4shrapibl"]
 
 [ext_resource type="Script" uid="uid://l55tsn1hrqwy" path="res://main/game.gd" id="1_2c7eb"]
 [ext_resource type="Script" uid="uid://cthtgumn3vfom" path="res://main/world.gd" id="2_4u4fy"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://gi8w253bpiht" path="res://img/system/HPBar_Over.png" id="11_yyuar"]
 [ext_resource type="Texture2D" uid="uid://1m1qtdnp7wix" path="res://img/system/HPBar_Progress.png" id="12_0coyo"]
 [ext_resource type="Script" uid="uid://doqy6mxgnxlrg" path="res://main/scripts/ui/DebugPanel.gd" id="12_v3ojx"]
+[ext_resource type="PackedScene" uid="uid://bpve00dcer873" path="res://main/pause_menu.tscn" id="15_0coyo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7m14"]
 bg_color = Color(1, 1, 1, 0.39607844)
@@ -136,12 +137,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="PauseMenu" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="DebugRoot" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 15
@@ -232,6 +227,8 @@ offset_top = 135.0
 offset_right = 3.0
 offset_bottom = 171.0
 text = "怪物射击"
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("15_0coyo")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
