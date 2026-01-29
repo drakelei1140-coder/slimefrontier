@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Slimefrontier"
 run/main_scene="uid://cmfn4shrapibl"
-config/features=PackedStringArray("4.5", "Mobile")
+config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 boot_splash/autoload_on_startup=true
 
@@ -20,6 +24,10 @@ boot_splash/autoload_on_startup=true
 
 InputConfig="*res://scripts/systems/input_config.gd"
 character_data_manager="*res://main/scripts/data/character_data_manager.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/agent/plugin.cfg")
 
 [global_group]
 
@@ -118,4 +126,5 @@ skill_4={
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
